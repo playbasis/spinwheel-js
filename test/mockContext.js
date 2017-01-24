@@ -1,4 +1,3 @@
 (function () {
-    // mock setting dynamic value
-    PBSpinwheel.dynamicText = "Dynamic Text";
+	// add mock context setting here ...
 })();
