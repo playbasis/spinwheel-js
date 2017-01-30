@@ -56,16 +56,18 @@
   window.addEventListener('WebComponentsReady', function(e) {
   	console.log("WebComponents is ready");
 
+    // get html element to access its property
     var elem = document.querySelector("pb-spinwheel");
 
-    elem.buildAndAuthPlaybasis()
-      .then(function(result) {
-        console.log(result);
-      }, function(e) {
-        console.log(e);
-      });
+    // listen to success event
+    document.addEventListener(elem.kSuccessEvent, function(e) {
+      console.log("success: ", e.detail);
+    });
 
-    // do something here as webcomponent is ready ...
+    // listen to any error event
+    document.addEventListener(elem.kErrorEvent, function(e) {
+      console.log("error: ", e.detail);
+    });
   });
 </script>
 </body>

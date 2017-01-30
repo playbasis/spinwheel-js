@@ -27,13 +27,13 @@ class PbSpinwheel {
             }
           }
         },
-        successEvent: {
+        kSuccessEvent: {
           type: String,
           value: function() { return "pb-spinwheel-success-event"; }
         },
-        errorEvent: {
+        kErrorEvent: {
           type: String,
-          value: function() { return "pb-spinwheel-success-event"; }
+          value: function() { return "pb-spinwheel-error-event"; }
         },
         isLoaded: {
           type: Boolean,
@@ -94,18 +94,22 @@ class PbSpinwheel {
 
   /**
    * Fire success event with attached data
-   * @param  {Object} data data to be sent along with success event
+   * @param  {Object} dataObj data to be sent along with success event
    */
-  fireSuccessEvent(data) {
-
+  fireSuccessEvent(dataObj) {
+    console.log("firing success event: ", this.kSuccessEvent, dataObj);
+    var event = new CustomEvent( this.kSuccessEvent, { "detail": dataObj } );
+    document.dispatchEvent(event);
   }
 
   /**
    * Fire error event with attached data
-   * @param  {Object} data data to be sent along with error event
+   * @param  {Object} dataObj data to be sent along with error event
    */
-  fireErrorEvent(data) {
-
+  fireErrorEvent(dataObj) {
+    console.log("firing error event: ", this.kErrorEvent, dataObj);
+    var event = new CustomEvent( this.kErrorEvent, { "detail": dataObj } );
+    document.dispatchEvent(event);
   }
 
   /**
@@ -153,8 +157,7 @@ class PbSpinwheel {
       .error(function(e) {
         console.log("error fetching all rules. " + e.code + ", " + e.message);
 
-        // TODO: Midgrate to dispatchEvent
-        //selfObj.onError.emit(e);
+        selfObj.fireErrorEvent(e);
       });
   }
 
@@ -263,7 +266,7 @@ class PbSpinwheel {
         })
         .error(function(e) {
           console.log(e);
-          selfObj.onError.emit(e);
+          selfObj.fireErrorEvent(e);
           return reject(new Playbasis.Promise.OperationalError("failed on engine rule action: " + selfObj._kTargetAction + ", for playerId: " + playerId + ", urlValue: " + selfObj._rule.urlValue));
         });
     });
@@ -586,7 +589,7 @@ class PbSpinwheel {
         // send back though callback
         console.log("getRewardItem: ", selfObj._gotRewardItem);
         // send final result back to user
-        selfObj.onSuccess.emit(selfObj._gotRewardItem);
+        selfObj.fireSuccessEvent(selfObj._gotRewardItem);
       });
     }
   }
