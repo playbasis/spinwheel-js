@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1">
+<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js" async></script>
+
+<!-- Import your component here -->
+<link rel="import" href="dist/pb-spinwheel-component.v.html">
+
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  #banner {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #4CAF50;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 16px 24px;
+  }
+  h2 {
+    margin: 0;
+  }
+</style>
+</head>
+<body><!--  unresolved> -->
+
+<header id="banner">
+  <h2>Today's stocks</h2>
+</header>
+
+<main>
+  <div>
+    <pb-spinwheel symbols='["GOOG", "GOOGL"]'>Loading...</pb-spinwheel>
+  </div>
+</main>
+
+<script>
+  window.addEventListener('WebComponentsReady', function(e) {
+  	console.log("WebComponents is ready");
+
+    var elem = document.querySelector("pb-spinwheel");
+
+    console.log(elem.dummyStr('test'));
+    console.log(elem._computePercent('0.07'));
+
+    // do something here as webcomponent is ready ...
+  });
+</script>
+</body>
+</html>

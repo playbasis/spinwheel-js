@@ -1,3 +1,0 @@
-describe("PBSpinwheel's core tests", function() {
-	// TODO: Add test cases here ...
-});

@@ -1,3 +1,0 @@
-(function () {
-	// add mock context setting here ...
-})();
