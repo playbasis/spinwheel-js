@@ -1,15 +1,19 @@
 describe('pb-spinwheel-test', function() {
 	
-	var stockticker;
+	var elem;
 	var to_check;
 	var id_name = 'my-pb-spinwheel';
+	var successEvent = 'on-success-event';
+	var errorEvent = 'on-error-event';
 
 	beforeAll(function(done) {
+
 		window.addEventListener('WebComponentsReady', function(e) {
-			stockticker = document.createElement('pb-spinwheel');
-			stockticker.setAttribute('symbols', '["GOOG", "GOOGL"]');
-			stockticker.setAttribute('id', id_name);
-			document.body.appendChild(stockticker);
+			elem = document.createElement('pb-spinwheel');
+			elem.setAttribute('on-success-event', successEvent);
+			elem.setAttribute('on-error-event', errorEvent);
+			elem.setAttribute('id', id_name);
+			document.body.appendChild(elem);
 
 			// get element now and use it throughout test case
 			//to_check = document.getElementById(id_name);
@@ -28,40 +32,7 @@ describe('pb-spinwheel-test', function() {
 		expect(to_check).not.toBe(null);
 	});
 
-	it('should has proper value as set on \'symbols\' attribute', function() {
-		expect(to_check.getAttribute('symbols')).toEqual("[\"GOOG\", \"GOOGL\"]");
-	});
-
-	it('should has existing functions as seen in code', function() {
-		expect(typeof(to_check._computePoints) === 'function').toBeTruthy();
-		expect(typeof(to_check._computeColor) === 'function').toBeTruthy();
-		expect(typeof(to_check._computeArrow) === 'function').toBeTruthy();
-		expect(typeof(to_check._computeHref) === 'function').toBeTruthy();
-		expect(typeof(to_check._computePercent) === 'function').toBeTruthy();
-		expect(typeof(to_check._updateQuotes) === 'function').toBeTruthy();
-		expect(typeof(to_check.beforeRegister) === 'function').toBeTruthy();
-	});
-
-	it('should validate result from _computeColor()', function() {
-		expect(to_check._computeColor(19)).toEqual("color:#4CAF50");
-		expect(to_check._computeColor(-19)).toEqual("color:#F44336");
-	});
-
-	it('should validate result from _computeArrow()', function() {
-		expect(to_check._computeArrow(10)).toEqual("▲");
-		expect(to_check._computeArrow(-10)).toEqual("▼");
-	});
-
-	it('shoud validate result from _computeHref()', function() {
-		expect(to_check._computeHref(to_check.getAttribute('id'))).toEqual("https://www.google.com/finance?q=" + id_name);
-	});
-
-	it('should validate result from _computePoints()', function() {
-		expect(to_check._computePoints(-100.23)).toEqual(100.23);
-		expect(to_check._computePoints(100.23)).toEqual(100.23);
-	});
-
-	it('should validate result from _computePercent()', function() {
-		expect(to_check._computePercent("0.07")).toEqual(".07");
+	it('should validate member variables', function() {
+		expect(to_check._degree).toEqual(1800);
 	});
 });
