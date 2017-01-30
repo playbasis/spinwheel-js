@@ -76,11 +76,6 @@ class PbSpinwheel {
       this._kCustomParamUrl_values = ["spin-wheel1", "spin-wheel2", "spin-wheel3"];
       this._innerWheelHtmlElement;
     }
-
-    this.beginSpinWheelFlowWrapper = function(event, detail, sender) {
-      console.log("called wrapper callback");
-      this.beginSpinWheelFlow();
-    }
   }
 
   buildAndAuthPlaybasis() {
