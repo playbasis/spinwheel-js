@@ -314,7 +314,9 @@
   .flag-icon.flag-icon-squared {
     width: 1em;
   }
+  
 </style>
+
   <div id="wrapper">
     <div id="wheel">
       <div id="inner-wheel" #innerWheel></div>
@@ -325,7 +327,8 @@
     </div>
     <img id="wheel-arrow" src="../assets/arrow.png"/>
   </div>
-  <button>Spin</button>
+  <button on-tap="beginSpinWheelFlow" id="pb-spinwheel-button">Spin</button>
+
 </template>
 <script src="pb-spinwheel-component.js"></script>
 </dom-module>

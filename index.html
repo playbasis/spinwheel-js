@@ -58,6 +58,13 @@
 
     var elem = document.querySelector("pb-spinwheel");
 
+    elem.buildAndAuthPlaybasis()
+      .then(function(result) {
+        console.log(result);
+      }, function(e) {
+        console.log(e);
+      });
+
     // do something here as webcomponent is ready ...
   });
 </script>
