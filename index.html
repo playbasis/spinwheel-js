@@ -71,7 +71,10 @@
 <script>
 
   // need to build Playbasis environment first
-  
+  Playbasis.builder
+    .setApiKey("2043203153")
+    .setApiSecret("144da4c8df85b94dcdf1f228ced27a32")
+    .build();
 
   // listen to success event
   document.addEventListener("pb-spinwheel-success-event", function(e) {
