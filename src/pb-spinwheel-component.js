@@ -22,7 +22,8 @@ class PbSpinwheel {
           readOnly: true,
           value: function() {
             return {
-              PLAYBASIS_NOT_BUILD: 1
+              PLAYBASIS_NOT_BUILD: 1,       // playbasis environment was not built yet
+              NO_APPLICABLE_RULE: 2         // no applicable rule can be found to use with spin wheel
             }
           }
         },
@@ -153,7 +154,7 @@ class PbSpinwheel {
     let selfObj = this;
 
     Playbasis.engineApi.listRules({action: this.envTargetAction})
-      .then(function(result) {
+      .then((result) => {
 
         selfObj.dlog("result: ", result);
 
@@ -168,6 +169,10 @@ class PbSpinwheel {
           selfObj.dlog("there's no rule to play with");
 
           // do nothing as css already showed the initial state of spinwheel
+          // fire error event to let users knows
+          let e = new Error("There is no applicable rule for spinwheel.");
+          e.code = selfObj.kErrorCode.NO_APPLICABLE_RULE;
+          selfObj.fireErrorEvent(e);
         }
         else {
           selfObj.dlog("got rule to play with");
@@ -192,7 +197,7 @@ class PbSpinwheel {
           selfObj.isLoaded = true;
         }
       })
-      .error(function(e) {
+      .error((e) => {
         selfObj.dlog("error fetching all rules. " + e.code + ", " + e.message);
 
         selfObj.fireErrorEvent(e);
@@ -220,8 +225,9 @@ class PbSpinwheel {
           // spin the wheel
           this.spinWheel(this.getRotationAngleForTargetSectionIndex(this._targetSectionIndex));
         })
-        .error(function(e) {
+        .error((e) => {
           this.dlog(e);
+          this.fireErrorEvent(e);
         });
 
       this.dlog("clicked to spin");
@@ -311,18 +317,18 @@ class PbSpinwheel {
     let playerId = "jontestuser";
 
     let selfObj = this;
-    return new Playbasis.Promise( function(resolve, reject) {
+    return new Playbasis.Promise( (resolve, reject) => {
       Playbasis.engineApi.rule(selfObj.envTargetAction, playerId, { url: selfObj._rule.urlValue })
-        .then(function(result) {
+        .then((result) => {
 
           selfObj.dlog("success rule for spin wheel");
           selfObj.dlog(result);
+
           return resolve(result);
         })
-        .error(function(e) {
+        .error((e) => {
           selfObj.dlog(e);
 
-          selfObj.fireErrorEvent(e);
           return reject(new Playbasis.Promise.OperationalError("failed on engine rule action: " + selfObj.envTargetAction + ", for playerId: " + playerId + ", urlValue: " + selfObj._rule.urlValue));
         });
     });
@@ -676,7 +682,7 @@ class PbSpinwheel {
 
     for (var i=0; i<events.length; i++) {
 
-      innerWheelElem.addEventListener(events[i], function() {
+      innerWheelElem.addEventListener(events[i], () => {
         selfObj.dlog("spinning wheel completes for event: " + events[i]);
         selfObj.dlog("rotation stopped at " + selfObj.getCurrentRotation(innerWheelElem));
 
