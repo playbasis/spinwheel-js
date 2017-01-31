@@ -81,7 +81,6 @@ class PbSpinwheel {
       this._rewards = [];
       this._gotRewardItem = null;   // reward that will be got from executing rule
       this._targetSelectionIndex;   // section index that spin wheel will be spinning, corresponding to gotRewardItem from executing rule
-      this._isStopSpinArrow = false;
       this._spinButtonDisabled = true;    // expose disability of button to outside
 
       this._kParamName = "url";
@@ -600,13 +599,6 @@ class PbSpinwheel {
     }
   }
 
-  setTimeoutToStopSpinningArrow(secs) {
-    let selfObj = this;
-    setTimeout(function() {
-      selfObj._isStopSpinArrow = true;
-    }, secs * 1000);
-  }
-
   spinWheel(targetDegree) {
     console.log("spinning wheel");
 
@@ -616,7 +608,6 @@ class PbSpinwheel {
 
     // add listener to its css transition event
     this.addEventListenerOfTransitionEndToInnerWheelElement();
-    this.setTimeoutToStopSpinningArrow(4);
     this._innerWheelHtmlElement.style.transform = "rotate(" + totalDegree + 'deg)';
   }
 }
