@@ -23,7 +23,8 @@ class PbSpinwheel {
           value: function() {
             return {
               PLAYBASIS_NOT_BUILD: 1,       // playbasis environment was not built yet
-              NO_APPLICABLE_RULE: 2         // no applicable rule can be found to use with spin wheel
+              NO_APPLICABLE_RULE: 2,        // no applicable rule can be found to use with spin wheel
+              PLAYER_ID_NOT_SET: 3,         // player id is not set prior to attaching component HTML element in the DOM
             }
           }
         },
@@ -50,6 +51,12 @@ class PbSpinwheel {
         showDebugLog: {
           type: Boolean,
           value: function() { return false; }
+        },
+
+        // required settings
+        playerId: {
+          type: String,
+          value: function() { return null; }
         },
 
         // enviroment settings
@@ -196,8 +203,7 @@ class PbSpinwheel {
           // each sections on the wheel necessarily
           selfObj.isLoaded = true;
         }
-      })
-      .error((e) => {
+      }, (e) => {
         selfObj.dlog("error fetching all rules. " + e.code + ", " + e.message);
 
         selfObj.fireErrorEvent(e);
@@ -224,8 +230,7 @@ class PbSpinwheel {
 
           // spin the wheel
           this.spinWheel(this.getRotationAngleForTargetSectionIndex(this._targetSectionIndex));
-        })
-        .error((e) => {
+        }, (e) => {
           this.dlog(e);
           this.fireErrorEvent(e);
         });
@@ -313,8 +318,20 @@ class PbSpinwheel {
    * @return {Object} Promise object
    */
   executeEngineRuleToGetRewardId() {
-    // TODO: Accept playerId from external
-    let playerId = "jontestuser";
+    let playerId = this.playerId;
+
+    // if player id is not set properly yet, then return Promise's reject object immediately
+    if (playerId == null ||
+        playerId == "") {
+      
+      let e = new Error("Player Id is not set prior to attaching " + this.is + " in the DOM. Set it by using 'player-id=<player-id>' as attribute in <pb-spinwheel> HTML element.");
+      e.code = this.kErrorCode.PLAYER_ID_NOT_SET;
+      
+      // return Promise object
+      return new Promise( (resolve, reject) => {
+        return reject(e);
+      });
+    }
 
     let selfObj = this;
     return new Playbasis.Promise( (resolve, reject) => {
@@ -325,8 +342,7 @@ class PbSpinwheel {
           selfObj.dlog(result);
 
           return resolve(result);
-        })
-        .error((e) => {
+        }, (e) => {
           selfObj.dlog(e);
 
           return reject(new Playbasis.Promise.OperationalError("failed on engine rule action: " + selfObj.envTargetAction + ", for playerId: " + playerId + ", urlValue: " + selfObj._rule.urlValue));

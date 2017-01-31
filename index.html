@@ -60,6 +60,7 @@
       env-target-action="click"
       env-target-tag="spin-wheel"
       env-custom-param-url-values='["spin-wheel1", "spin-wheel2", "spin-wheel3"]'
+      player-id="jontestuser"
       show-debug-log
     >Loading...</pb-spinwheel>
   </div>
@@ -70,12 +71,13 @@
 
 <script>
 
-  // need to build Playbasis environment first
+  // 1.) Build Playbasis environment first
   Playbasis.builder
     .setApiKey("2043203153")
     .setApiSecret("144da4c8df85b94dcdf1f228ced27a32")
     .build();
 
+  // 2.) Listen to success & error events
   // listen to success event
   document.addEventListener("pb-spinwheel-success-event", function(e) {
     console.log("You got reward: ", e.detail);
@@ -88,6 +90,7 @@
     alert("There's an error!\nSee console for detail.");
   });
 
+  // 3.) Do something after 'WebComponentsReady' is fired i.e. call component's member functions (if need)
   // when WebComponentsReady, then we can call members function of element class (if need)
   window.addEventListener('WebComponentsReady', function(e) {
   	console.log("WebComponents is ready");
@@ -96,6 +99,7 @@
     var elem = document.querySelector("pb-spinwheel");
 
     // do something here ...
+    // such as calling its member functions
   });
 </script>
 </body>
