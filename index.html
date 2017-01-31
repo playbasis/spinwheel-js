@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1">
+<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js" async></script>
+
+<!-- Import your component here -->
+<link rel="import" href="dist/pb-spinwheel-component.v.html">
+
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  main > div:first-child {
+    flex: 0 1 60%;
+  }
+  main > div:nth-child(2) {
+    margin-top: 20px;
+  }
+  #banner {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #4CAF50;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 16px 24px;
+  }
+  h2 {
+    margin: 0;
+  }
+</style>
+</head>
+<body><!--  unresolved> -->
+
+<header id="banner">
+  <h2>PbSpinwheel Demo</h2>
+</header>
+
+<main>
+  <div>
+    <pb-spinwheel>Loading...</pb-spinwheel>
+  </div>
+  <div>
+    See console for detail.
+  </div>
+</main>
+
+<script>
+  window.addEventListener('WebComponentsReady', function(e) {
+  	console.log("WebComponents is ready");
+
+    // get html element to access its property
+    var elem = document.querySelector("pb-spinwheel");
+
+    // listen to success event
+    document.addEventListener(elem.kSuccessEvent, function(e) {
+      console.log("success: ", e.detail);
+      alert("You got reward!\nSee console for detail.");
+    });
+
+    // listen to any error event
+    document.addEventListener(elem.kErrorEvent, function(e) {
+      console.log("error: ", e.detail);
+      alert("There's an error!\nSee console for detail.");
+    });
+  });
+</script>
+</body>
+</html>

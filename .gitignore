@@ -1,10 +1,4 @@
-/node_modules
-/dist
-/karma_html
-/docs
-/lib
+node_modules/
+bower_components/
+dist/
 npm-debug.log
-
-.DS_Store
-
-test.html
