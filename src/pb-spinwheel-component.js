@@ -16,6 +16,16 @@ class PbSpinwheel {
 
     this.is = is;
     this.properties = {
+        // error code used for this component
+        kErrorCode: {
+          type: Object,
+          readOnly: true,
+          value: function() {
+            return {
+              PLAYBASIS_NOT_BUILD: 1
+            }
+          }
+        },
         // aimed to be constant variable for success event name
         // user adds event listener to this name to listen to it
         kSuccessEvent: {
@@ -71,14 +81,16 @@ class PbSpinwheel {
       // get child element id
       this._innerWheelHtmlElement = document.getElementById("inner-wheel");
 
-      this.buildAndAuthPlaybasis().then((result) => {
+      if (Playbasis.env.global.apiKey != null &&
+          Playbasis.env.global.apiSecret != null) {
         // initialize by load
         this.loadSpinWheelRules();
-      }, (e) => {
-        if (this.showDebugLog) {
-          this.dlog(e);
-        }
-      });
+      }
+      else {
+        let e = new Error("Playbasis environment is not built yet");
+        e.code = this.kErrorCode.PLAYBASIS_NOT_BUILD;
+        this.fireErrorEvent(e);
+      }
     }
 
     // hide private member variables inside here
@@ -100,15 +112,6 @@ class PbSpinwheel {
     }
   }
 
-  buildAndAuthPlaybasis() {
-    Playbasis.builder
-     .setApiKey("2043203153")
-     .setApiSecret("144da4c8df85b94dcdf1f228ced27a32")
-     .build();
-
-    return Playbasis.authApi.auth();
-  }
-
   /**
    * Debug log wrapper for this.dlog().
    * This function will ignore and not do anything if this.showDebugLog is not set.
@@ -126,7 +129,7 @@ class PbSpinwheel {
    * @param  {Object} dataObj data to be sent along with success event
    */
   fireSuccessEvent(dataObj) {
-    this.dlog("firing success event: ", this.kSuccessEvent, dataObj);
+    this.dlog("firing success event: " + this.kSuccessEvent, dataObj);
 
     var event = new CustomEvent( this.kSuccessEvent, { "detail": dataObj } );
     document.dispatchEvent(event);
@@ -137,7 +140,7 @@ class PbSpinwheel {
    * @param  {Object} dataObj data to be sent along with error event
    */
   fireErrorEvent(dataObj) {
-    this.dlog("firing error event: ", this.kErrorEvent, dataObj);
+    this.dlog("firing error event: " + this.kErrorEvent, dataObj);
     var event = new CustomEvent( this.kErrorEvent, { "detail": dataObj } );
     document.dispatchEvent(event);
   }
