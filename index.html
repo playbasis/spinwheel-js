@@ -60,6 +60,7 @@
       env-target-action="click"
       env-target-tag="spin-wheel"
       env-custom-param-url-values='["spin-wheel1", "spin-wheel2", "spin-wheel3"]'
+      show-debug-log
     >Loading...</pb-spinwheel>
   </div>
   <div>
@@ -76,7 +77,7 @@
 
     // listen to success event
     document.addEventListener(elem.kSuccessEvent, function(e) {
-      console.log("success: ", e.detail);
+      console.log("You got reward: ", e.detail);
       alert("You got reward!\nSee console for detail.");
     });
 

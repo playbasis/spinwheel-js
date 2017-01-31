@@ -16,17 +16,27 @@ class PbSpinwheel {
 
     this.is = is;
     this.properties = {
+        // aimed to be constant variable for success event name
+        // user adds event listener to this name to listen to it
         kSuccessEvent: {
           type: String,
           readOnly: true,
           value: function() { return "pb-spinwheel-success-event"; }
         },
+        // aimed to be constant variable for error event name
+        // user adds event listener to this name to listen to it
         kErrorEvent: {
           type: String,
           readOnly: true,
           value: function() { return "pb-spinwheel-error-event"; }
         },
+        // dynamically set internally when it's firstly loaded successfully
         isLoaded: {
+          type: Boolean,
+          value: function() { return false; }
+        },
+        // turn this on to true to also show debugging log to console
+        showDebugLog: {
           type: Boolean,
           value: function() { return false; }
         },
@@ -65,7 +75,9 @@ class PbSpinwheel {
         // initialize by load
         this.loadSpinWheelRules();
       }, (e) => {
-        console.log(e);
+        if (this.showDebugLog) {
+          console.log(e);
+        }
       });
     }
 
@@ -102,7 +114,9 @@ class PbSpinwheel {
    * @param  {Object} dataObj data to be sent along with success event
    */
   fireSuccessEvent(dataObj) {
-    console.log("firing success event: ", this.kSuccessEvent, dataObj);
+    if (this.showDebugLog) {
+      console.log("firing success event: ", this.kSuccessEvent, dataObj);
+    }
     var event = new CustomEvent( this.kSuccessEvent, { "detail": dataObj } );
     document.dispatchEvent(event);
   }
@@ -112,7 +126,9 @@ class PbSpinwheel {
    * @param  {Object} dataObj data to be sent along with error event
    */
   fireErrorEvent(dataObj) {
-    console.log("firing error event: ", this.kErrorEvent, dataObj);
+    if (this.showDebugLog) {
+      console.log("firing error event: ", this.kErrorEvent, dataObj);
+    }
     var event = new CustomEvent( this.kErrorEvent, { "detail": dataObj } );
     document.dispatchEvent(event);
   }
@@ -126,27 +142,42 @@ class PbSpinwheel {
 
     Playbasis.engineApi.listRules({action: this.envTargetAction})
       .then(function(result) {
-        console.log("result: ", result);
+
+        if (selfObj.showDebugLog) {
+          console.log("result: ", result);
+        }
+
         // find possible rules
         var rules = selfObj.findRulesWithTargetTagAndHaveCustomUrlValuesThatPassedUrlValuesCriteria(result.response, selfObj.envCustomParamUrlValues);
         // get a random rule to play with
         selfObj._rule = selfObj.getRandomRuleToPlay(rules);
-        console.log("got rule: ", selfObj._rule);
+
+        if (selfObj.showDebugLog) {
+          console.log("got rule: ", selfObj._rule);
+        }
 
         if (selfObj._rule == null) {
-          console.log("there's no rule to play with");
+          if (selfObj.showDebugLog) {
+            console.log("there's no rule to play with");
+          }
 
           // do nothing as css already showed the initial state of spinwheel
         }
         else {
-          console.log("got rule to play with");
+          if (selfObj.showDebugLog) {
+            console.log("got rule to play with");
+          }
 
           // find all rewards from rule
           selfObj.findAllRewardsFromRuleThenSave(selfObj._rule);
           // shuffle rewards
           selfObj.shuffleRewards();
-          console.log("shuffle");
-          console.log(selfObj._rewards);
+
+          if (selfObj.showDebugLog) {
+            console.log("shuffle");
+            console.log(selfObj._rewards);
+          }
+
           // generate reward DOM
           selfObj.generateAndAddRewardHTMLElement_to_spinWheelSection();
 
@@ -160,14 +191,22 @@ class PbSpinwheel {
         }
       })
       .error(function(e) {
-        console.log("error fetching all rules. " + e.code + ", " + e.message);
+        if (selfObj.showDebugLog) {
+          console.log("error fetching all rules. " + e.code + ", " + e.message);
+        }
 
         selfObj.fireErrorEvent(e);
       });
   }
 
+  /**
+   * Begin spinwhel flow
+   */
   beginSpinWheelFlow() {
-    console.log("_spinButtonDisabled: " + this._spinButtonDisabled);
+    if (this.showDebugLog) {
+      console.log("_spinButtonDisabled: " + this._spinButtonDisabled);
+    }
+
     if (!this._spinButtonDisabled) {
       this._spinButtonDisabled = true;
 
@@ -184,16 +223,25 @@ class PbSpinwheel {
           this.spinWheel(this.getRotationAngleForTargetSectionIndex(this._targetSectionIndex));
         })
         .error(function(e) {
-          console.log(e);
+          if (this.showDebugLog) {
+            console.log(e);
+          }
         });
 
-      console.log("clicked to spin");
+      if (this.showDebugLog) {
+        console.log("clicked to spin");
+      }
 
       // disable button
       document.getElementById("pb-spinwheel-button").disabled = true;
     }
   }
 
+  /**
+   * Get rotation angle within a target section index
+   * @param  {Number} index section index number
+   * @return {Number}       rotation that spin wheel should be rotating to reach the target section index
+   */
   getRotationAngleForTargetSectionIndex(index) {
     // section angle
     // this is a disect of total sections that it's easy for this method to spin the wheel
@@ -203,7 +251,9 @@ class PbSpinwheel {
     let minAngle;
     let maxAngle;
 
-    console.log("kOdds: ", this._kOdds);
+    if (this.showDebugLog) {
+      console.log("kOdds: ", this._kOdds);
+    }
 
     // special case for section index 0
     // its both half section is on both side of spinning direction
@@ -215,30 +265,41 @@ class PbSpinwheel {
         minAngle = this._kOdds[this._rewards.length] * halfSectionAngle;
         maxAngle = 360.01;  // at the beginning
 
-        console.log("target index at 0: go right");
-        console.log("minAngle: " + minAngle + ", maxAngle: " + maxAngle);
+        if (this.showDebugLog) {
+          console.log("target index at 0: go right");
+          console.log("minAngle: " + minAngle + ", maxAngle: " + maxAngle);
+        }
       }
       else {
         minAngle = 0;
         maxAngle = halfSectionAngle;
 
-        console.log("target index at 0: go left");
-        console.log("minAngle: " + minAngle + ", maxAngle: " + maxAngle);
+        if (this.showDebugLog) {
+          console.log("target index at 0: go left");
+          console.log("minAngle: " + minAngle + ", maxAngle: " + maxAngle);
+        }
       }
     }
     else {
       minAngle = this._kOdds[index] * halfSectionAngle;
       maxAngle = this._kOdds[index+1] * halfSectionAngle;
 
-      console.log("minAngle: " + minAngle + ", maxAngle: " + maxAngle);
+      if (this.showDebugLog) {
+        console.log("minAngle: " + minAngle + ", maxAngle: " + maxAngle);
+      }
     }
 
     // return the calcuated angle within the acceptable range
     var retAngle = Math.floor(Math.random() * (maxAngle-minAngle)) + minAngle;
-    console.log("spin to angle: " + retAngle);
+    if (this.showDebugLog) {
+      console.log("spin to angle: " + retAngle);
+    }
     return retAngle;
   }
 
+  /**
+   * Shuffle rewards
+   */
   shuffleRewards() {
     this.shuffle(this._rewards);
   }
@@ -257,6 +318,10 @@ class PbSpinwheel {
       }
   }
 
+  /**
+   * Get reward id from executing engine rule.
+   * @return {Object} Promise object
+   */
   executeEngineRuleToGetRewardId() {
     // TODO: Accept playerId from external
     let playerId = "jontestuser";
@@ -265,18 +330,26 @@ class PbSpinwheel {
     return new Playbasis.Promise( function(resolve, reject) {
       Playbasis.engineApi.rule(selfObj.envTargetAction, playerId, { url: selfObj._rule.urlValue })
         .then(function(result) {
-          console.log("success rule for spin wheel");
-          console.log(result);
+
+          if (selfObj.showDebugLog) {
+            console.log("success rule for spin wheel");
+            console.log(result);
+          }
           return resolve(result);
         })
         .error(function(e) {
-          console.log(e);
+          if (selfObj.showDebugLog) {
+            console.log(e);
+          }
           selfObj.fireErrorEvent(e);
           return reject(new Playbasis.Promise.OperationalError("failed on engine rule action: " + selfObj.envTargetAction + ", for playerId: " + playerId + ", urlValue: " + selfObj._rule.urlValue));
         });
     });
   }
 
+  /**
+   * Mark which section index is the result reward user should get.
+   */
   markTargetSectionIndex() {
     // check reward type first
     // if it's goods, then we need to check against goodsId
@@ -287,35 +360,51 @@ class PbSpinwheel {
     var rewardType = this._gotRewardItem.reward_type;
     var rewardValToCheckAgainst;
 
-    console.log("mark");
-    console.log(this._gotRewardItem);
+    if (this.showDebugLog) {
+      console.log("mark");
+      console.log(this._gotRewardItem);
+    }
 
     // be aware that the code doesn't support goods group
     // as goods group's id is dynamically generated thus goods id received as reward is different from one checking from rules
     if (rewardType == "point") {
       type = 1;
       rewardValToCheckAgainst = this._gotRewardItem.value;
-      console.log("mark: point type -> value: " + rewardValToCheckAgainst);
+
+      if (this.showDebugLog) {
+        console.log("mark: point type -> value: " + rewardValToCheckAgainst);
+      }
     }
     else if (rewardType == "goods") {
       type = 2;
       rewardValToCheckAgainst = this._gotRewardItem.reward_data.goods_id;
-      console.log("mark: goods type -> goods_id: " + rewardValToCheckAgainst);
+
+      if (this.showDebugLog) {
+        console.log("mark: goods type -> goods_id: " + rewardValToCheckAgainst);
+      }
     }
     else if (rewardType == "badge") {
       type = 3;
       rewardValToCheckAgainst = this._gotRewardItem.reward_data.badge_id;
-      console.log("mark: badge type -> badge_id: " + rewardValToCheckAgainst);
+
+      if (this.showDebugLog) {
+        console.log("mark: badge type -> badge_id: " + rewardValToCheckAgainst);
+      }
     }
     // otherwise the normal point-based reward
     else {
       type = 4;
       rewardValToCheckAgainst = this._gotRewardItem.value;
-      console.log("mark: point-based type -> value: " + rewardValToCheckAgainst);
+
+      if (this.showDebugLog) {
+        console.log("mark: point-based type -> value: " + rewardValToCheckAgainst);
+      }
     }
 
-    console.log("final");
-    console.log(this._rewards);
+    if (this.showDebugLog) {
+      console.log("final");
+      console.log(this._rewards);
+    }
 
     // find the matching reward in the pool of rewards we got from the rule
     // checking against either value for point-based, or goods_id for goods
@@ -325,39 +414,57 @@ class PbSpinwheel {
       if (type == 1 && reward.reward_name == "point") {
         if (reward.quantity == rewardValToCheckAgainst) {
           this._targetSectionIndex = i;
-          console.log("found target section index at: " + this._targetSectionIndex);
+
+          if (this.showDebugLog) {
+            console.log("found target section index at: " + this._targetSectionIndex);
+          }
           break;
         }
       }
       else if (type == 2 && reward.reward_name == "goods") {
         if (reward.data.goods_id == rewardValToCheckAgainst) {
           this._targetSectionIndex = i;
-          console.log("found target section index at: " + this._targetSectionIndex);
+
+          if (this.showDebugLog) {
+            console.log("found target section index at: " + this._targetSectionIndex);
+          }
           break;
         }
       }
       else if (type == 3 && reward.reward_name == "badge") {
         if (reward.data.badge_id == rewardValToCheckAgainst) {
           this._targetSectionIndex = i;
-          console.log("found target section index at: " + this._targetSectionIndex);
+
+          if (this.showDebugLog) {
+            console.log("found target section index at: " + this._targetSectionIndex);
+          }
           break;
         }
       }
       else if (type == 4) {
         if (reward.quantity == rewardValToCheckAgainst) {
           this._targetSectionIndex = i;
-          console.log("found target section index at: " + this._targetSectionIndex);
+
+          if (this.showDebugLog) {
+            console.log("found target section index at: " + this._targetSectionIndex);
+          }
           break;
         }
       }
     }
 
     if (this._targetSectionIndex == null) {
-      console.log("_targetSectionIndex is null");
-      console.log("type = " + type);
+
+      if (this.showDebugLog) {
+        console.log("_targetSectionIndex is null");
+        console.log("type = " + type);
+      }
     }
     else {
-      console.log(this._targetSectionIndex);
+
+      if (this.showDebugLog) {
+        console.log(this._targetSectionIndex);
+      }
     }
   }
 
@@ -373,6 +480,9 @@ class PbSpinwheel {
     return "transform: rotate(" + degree + "deg); -webkit-transform: rotate(" + degree + "deg); -moz-transform: rotate(" + degree + "deg); -o-transform: rotate(" + degree + "deg); -ms-transform: rotate(" + degree + "deg); border-color: " + color + " transparent;";
   }
 
+  /**
+   * Generate styled HTML elements and add them into spinwheel
+   */
   generateAndAddRewardHTMLElement_to_spinWheelSection() {
     let innerWheel = this._innerWheelHtmlElement;
 
@@ -471,6 +581,10 @@ class PbSpinwheel {
     }
   }
 
+  /**
+   * Find all rewards from rule then save it internally
+   * @param  {Object} rule rule object
+   */
   findAllRewardsFromRuleThenSave(rule) {
     // access customized object via .rule to get jigsaw_set
     let jigsawSet = rule.rule.jigsaw_set;
@@ -483,13 +597,21 @@ class PbSpinwheel {
         // save all rewards
         this._rewards = jigsaw.config.group_container;
 
-        console.log("save all rewards. Reward count " + this._rewards.length);
+        if (this.showDebugLog) {
+          console.log("save all rewards. Reward count " + this._rewards.length);
+        }
       
         break;  
       }
     }
   }
 
+  /**
+   * Find rules that pass the criteria we've set
+   * @param  {Object} rulesResponse   rules resposne JSON object as returned directly from Playbasis API call
+   * @param  {Array} customUrlValues array of custom url values
+   * @return {Array}                 array of rules that passed the criteria
+   */
   findRulesWithTargetTagAndHaveCustomUrlValuesThatPassedUrlValuesCriteria(rulesResponse, customUrlValues) {
     var rules = [];
 
@@ -520,7 +642,9 @@ class PbSpinwheel {
                   // create a customize object here {rule:, urlValue:}
                   rules.push({rule: r, urlValue: jigsaw.config.param_value });
 
-                  console.log("save rule with urlValue: " + jigsaw.config.param_value);
+                  if (this.showDebugLog) {
+                    console.log("save rule with urlValue: " + jigsaw.config.param_value);
+                  }
 
                   // match first matched of urlParamValues is enough
                   continue;
@@ -535,6 +659,11 @@ class PbSpinwheel {
     return rules;
   }
 
+  /**
+   * Get random rule to play
+   * @param  {Array} rules array of rules
+   * @return {Object}       randomized rule object to play
+   */
   getRandomRuleToPlay(rules) {
     if (rules == null)
       return null;
@@ -546,6 +675,11 @@ class PbSpinwheel {
     return rules[rIndex];
   }
 
+  /**
+   * Get the current rotation angle in degrees from specified element
+   * @param  {Object} element HTML element, for example it can be gotten via document.getElementById()
+   * @return {Number}         current rotation angle of element in degrees
+   */
   getCurrentRotation(element) {
     let st = window.getComputedStyle(element, null);
     let tr = st.getPropertyValue("-webkit-transform") ||
@@ -578,6 +712,10 @@ class PbSpinwheel {
     return angle;
   }
 
+  /**
+   * Add event listener to transition end event for inner wheel element
+   * It will listen to all possible events that can be across different browsers.
+   */
   addEventListenerOfTransitionEndToInnerWheelElement() {
     let events = ["transitionend", "webkitTransitionEnd", "otransitionend", "oTransitionEnd", "msTransitionEnd"];
     let innerWheelElem = this._innerWheelHtmlElement;
@@ -587,20 +725,28 @@ class PbSpinwheel {
     for (var i=0; i<events.length; i++) {
 
       innerWheelElem.addEventListener(events[i], function() {
-        console.log("spinning wheel completes for event: " + events[i]);
-        console.log("rotation stopped at " + selfObj.getCurrentRotation(innerWheelElem));
+        if (selfObj.showDebugLog) {
+          console.log("spinning wheel completes for event: " + events[i]);
+          console.log("rotation stopped at " + selfObj.getCurrentRotation(innerWheelElem));
 
-        // we get result of reward
-        // send back though callback
-        console.log("getRewardItem: ", selfObj._gotRewardItem);
+          // we get result of reward
+          // send back though callback
+          console.log("getRewardItem: ", selfObj._gotRewardItem);
+        }
         // send final result back to user
         selfObj.fireSuccessEvent(selfObj._gotRewardItem);
       });
     }
   }
 
+  /**
+   * Spin the wheel
+   * @param  {Number} targetDegree target rotation in degrees to rotate the wheel to
+   */
   spinWheel(targetDegree) {
-    console.log("spinning wheel");
+    if(this.showDebugLog) {
+      console.log("spinning wheel");
+    }
 
     // generate random number between 1 - 360, then add to the new degree.
     var newDegree = this._degree;
