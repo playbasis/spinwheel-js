@@ -10,6 +10,12 @@
     "build": "npm run clean && ./scripts/build.sh",
     "clean": "rm -rf ./dist/*"
   },
+  "browserify": {
+    "transform": [ "browserify-shim" ]
+  },
+  "browserify-shim": {
+    "playbasis.js": "global:Playbasis"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/haxpor/pbSpinwheel.git"
@@ -27,6 +33,7 @@
     "babel-cli": "^6.22.2",
     "babel-preset-es2015": "^6.16.0",
     "browserify": "^14.0.0",
+    "browserify-shim": "^3.8.13",
     "crisper": "^2.0.2",
     "http-server": "^0.9.0",
     "jasmine-core": "^2.5.2",
