@@ -30,6 +30,8 @@ class PbSpinwheel {
           type: Boolean,
           value: function() { return false; }
         },
+
+        // enviroment settings
         envPointRewardLevels: {
           type: Object,
           value: function() { 
@@ -39,6 +41,18 @@ class PbSpinwheel {
               level4: 60
             }
           }
+        },
+        envTargetAction: {
+          type: String,
+          value: function() { return "click"; }
+        },
+        envTargetTag: {
+          type: String,
+          value: function() { return "spin-wheel"; }
+        },
+        envCustomParamUrlValues: {
+          type: Array,
+          value: function() { return ["spin-wheel1", "spin-wheel2", "spin-wheel3"] }
         }
     };
 
@@ -70,11 +84,7 @@ class PbSpinwheel {
       this._isStopSpinArrow = false;
       this._spinButtonDisabled = true;    // expose disability of button to outside
 
-      this._kTargetAction = "click";
-      this._kTargetTag = "spin-wheel";
-
       this._kParamName = "url";
-      this._kCustomParamUrl_values = ["spin-wheel1", "spin-wheel2", "spin-wheel3"];
       this._innerWheelHtmlElement;
     }
   }
@@ -115,11 +125,11 @@ class PbSpinwheel {
 
     let selfObj = this;
 
-    Playbasis.engineApi.listRules({action: this._kTargetAction})
+    Playbasis.engineApi.listRules({action: this.envTargetAction})
       .then(function(result) {
         console.log("result: ", result);
         // find possible rules
-        var rules = selfObj.findRulesWithTargetTagAndHaveCustomUrlValuesThatPassedUrlValuesCriteria(result.response, selfObj._kCustomParamUrl_values);
+        var rules = selfObj.findRulesWithTargetTagAndHaveCustomUrlValuesThatPassedUrlValuesCriteria(result.response, selfObj.envCustomParamUrlValues);
         // get a random rule to play with
         selfObj._rule = selfObj.getRandomRuleToPlay(rules);
         console.log("got rule: ", selfObj._rule);
@@ -254,7 +264,7 @@ class PbSpinwheel {
 
     let selfObj = this;
     return new Playbasis.Promise( function(resolve, reject) {
-      Playbasis.engineApi.rule(selfObj._kTargetAction, playerId, { url: selfObj._rule.urlValue })
+      Playbasis.engineApi.rule(selfObj.envTargetAction, playerId, { url: selfObj._rule.urlValue })
         .then(function(result) {
           console.log("success rule for spin wheel");
           console.log(result);
@@ -263,7 +273,7 @@ class PbSpinwheel {
         .error(function(e) {
           console.log(e);
           selfObj.fireErrorEvent(e);
-          return reject(new Playbasis.Promise.OperationalError("failed on engine rule action: " + selfObj._kTargetAction + ", for playerId: " + playerId + ", urlValue: " + selfObj._rule.urlValue));
+          return reject(new Playbasis.Promise.OperationalError("failed on engine rule action: " + selfObj.envTargetAction + ", for playerId: " + playerId + ", urlValue: " + selfObj._rule.urlValue));
         });
     });
   }
@@ -491,7 +501,7 @@ class PbSpinwheel {
       var r = rulesResponse[i];
 
       // return -1 if not found
-      if (r.tags.search(this._kTargetTag) != -1) {
+      if (r.tags.search(this.envTargetTag) != -1) {
         // only if this rule has url param set
         if (r.jigsaw_set != null) {
           for (var j=0; j<r.jigsaw_set.length; j++) {
