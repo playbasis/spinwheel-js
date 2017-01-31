@@ -29,10 +29,12 @@ class PbSpinwheel {
         },
         kSuccessEvent: {
           type: String,
+          readOnly: true,
           value: function() { return "pb-spinwheel-success-event"; }
         },
         kErrorEvent: {
           type: String,
+          readOnly: true,
           value: function() { return "pb-spinwheel-error-event"; }
         },
         isLoaded: {
