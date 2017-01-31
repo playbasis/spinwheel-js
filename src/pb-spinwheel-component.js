@@ -16,17 +16,6 @@ class PbSpinwheel {
 
     this.is = is;
     this.properties = {
-        // environment setting
-        env: {
-          type: Object,
-          value: { 
-            spinWheelPointRewardLevels: {
-              level2: 10,
-              level3: 30,
-              level4: 60
-            }
-          }
-        },
         kSuccessEvent: {
           type: String,
           readOnly: true,
@@ -40,6 +29,16 @@ class PbSpinwheel {
         isLoaded: {
           type: Boolean,
           value: function() { return false; }
+        },
+        envPointRewardLevels: {
+          type: Object,
+          value: function() { 
+            return {
+              level2: 10,
+              level3: 30,
+              level4: 60
+            }
+          }
         }
     };
 
@@ -432,7 +431,7 @@ class PbSpinwheel {
       else if (reward.reward_name == "point") {
         // check which point image to show on spin wheel
         let quantity = reward.quantity;
-        let kPointLevels = this.env.spinWheelPointRewardLevels;
+        let kPointLevels = this.envPointRewardLevels;
         let image;
         if (quantity >= kPointLevels.level4) {
           image = "../assets/starpoint_4.png";
