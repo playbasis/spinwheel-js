@@ -23,7 +23,7 @@ Thus this project stays low closely to native platform as much as possible, and 
 The startup project is generated via [basepolymerit-cli](https://github.com/haxpor/basepolymerit-cli).  
 Commands to manage project and development are centralized into NPM's run scripts as follows, see [basepolymerit](https://github.com/haxpor/basepolymerit) for available commands such as `npm start`, `npm test`, `npm run server`, and couple more.
 
-## Integration
+## Integration in Code
 
 We have demo of spinwheel working with pure Javascript + HTML, Angular 2, and React.  
 For detail of integration for Angular 2, and React, please see them [here](https://github.com/playbasis/spinwheel-demo).
@@ -179,6 +179,28 @@ The available settings are as follow
    ```
 
 ## Dashboard Setup
+
+* Go to [https://pbapp.net/login](https://pbapp.net/login) to register and create a new application. Choose a platform that matches with your intention to develop an application on.
+* Note your `Api Key` and `Api Secret`.
+* Click on `Engine` on the left panel, then click on `New Rule` to create a new rule.
+* Enter `TITLE`, `DESCRIPTION`, and set `TAGS` as appropriated. <sub>Note your `TAGS` value, we will be using this in code.</sub>
+* Click on `Add Action` and choose an action you intended to use it. <sub>Note this value.</sub>
+* Click on `Add: condition & reward` -> `Condition` -> `customParameter`.
+* Enter `NAME` as `url` with `OPERATION` to be `=`, then enter `EXPECTED VALUE` as you desire. <sub>Note your `EXPECTED VALUE`, we will be using it in code.</sub>
+* Click on `Add: condition & reward` -> `Reward Group` -> `random` to create a randomized reward group in which this type of reward is suitable for using with spin wheel.
+* Click on `+ Add Reward` and add as many reward as you like. Reward type can be normal point-based like `exp`, `point`, `token` or even `goods`.
+* For each added reward, you can set its `QUANTITY` which is amount to give to user, and its `WEIGHT` which determines the chance of such reward to be given.
+* Click `Save` button.
+* We're done with our first rule.  
+   You can repeat the above steps as many rule as much as you like. Each rule to be used in spinwheel component needs to have **unique** value for `url` as you set it in condition. During the run time, spinwheel component will dynamically fetch all those rules starting the filtering process from
+      * tag
+      * action
+      * condition as seen in `url` and its value
+   This means you can have multiple of rules that are suitable to be used with spinwheel component.  
+   See more information of rules which are eligible to be considered in use for spinwheel component at section *Rule Eligibility*.
+* All your *noted values* as seen above, you will use those values to configure spinwheel component in code.
+
+# Rule Eligibility
 
 To be added...
 
