@@ -198,11 +198,18 @@ The available settings are as follow
       * condition as seen in `url` and its value
    This means you can have multiple of rules that are suitable to be used with spinwheel component.  
    See more information of rules which are eligible to be considered in use for spinwheel component at section *Rule Eligibility*.
-* All your *noted values* as seen above, you will use those values to configure spinwheel component in code.
+* All your *noted values* as seen above, you will use them to configure spinwheel component in code.
 
 # Rule Eligibility
 
-To be added...
+To consider a rule to be eligile or not for using in spinwheel component. It needs to have following information set on dashboard.
+
+* Tags  
+   Rules with the same tags will be grouped together in consideration further.
+* Action
+   Rules with the same action string will be grouped together in consideration futher.
+* `url` value  
+   A custom parameter value of `url` that must be unique for each rule as set on dashboard. You specify subset of all of these values to include them in consideration by the component.
 
 # Misc
 This project is based on [https://github.com/haxpor/basepolymerit](https://github.com/haxpor/basepolymerit)
