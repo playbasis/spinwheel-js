@@ -127,42 +127,38 @@ it works too! But it will use default value of all setting that might not be the
 
 The available settings are as follow
 
-* `env-point-reward-levels` - `Object Literal`<sub>Type</sub> - *Optional*  
+* **`env-point-reward-levels` - `Object Literal`<sub>Type</sub> - *Optional***  
    Amount of point reward for each level that defines which point reward image the component will use when renders it. For example, if you set the rule on dashboard to have 4 different amount of point reward says 5, 10, 15, and 40. You can configure to let spinwheel component knows how it should display a proper image to match its amount for each case. Thus in result, it's better for visual.
 
    Currently it support 4 levels. If set it like `"level3": 30`, it means component will show level3 version of point reward image if such point reward is at least 30 or above. The component will make sure to show the image properly when you specified amount for all levels. Thus for `"level2": 10`, the component will show level2 version of point reward image if such point reward is at least 10 or above, but less than 30 (as it' set in case of `"level3"`).
 
-   **Default values**  
-   `env-point-reward-levels='{ "level2": 10, "level3": 30, "level4": 60 }'`
+   **Default values**: `env-point-reward-levels='{ "level2": 10, "level3": 30, "level4": 60 }'`
 
-* `env-target-action` - `String`<sub>String</sub> - *Optional*  
+* **`env-target-action` - `String`<sub>String</sub> - *Optional***  
    Target action string to be checked when component is trying to fetch appropriated rules that can be used for spinning the wheel and give back reward from Playbasis platform. If action string is not matched, then the component won't include that rule in consideration.
 
-   **Default values**  
-   `env-target-action="click"`
+   **Default values**: `env-target-action="click"`
 
-* `env-target-tag` - `String`<sub>Type</sub> - *Optional*  
+* **`env-target-tag` - `String`<sub>Type</sub> - *Optional***  
    Target tag string to be checked when component is trying to fetch appropriated rules that can be used for spinning the wheel and give back reward from Playbasis platform. It tag string is not matched, then the component won't include that rule in consideration.
 
-   **Default values**  
-   `env-target-tag="spin-wheel"`
+   **Default values**: `env-target-tag="spin-wheel"`
 
-* `env-custom-param-url-values` - `Array Literal`<sub>Type</sub> - *Optional*  
+* **`env-custom-param-url-values` - `Array Literal`<sub>Type</sub> - *Optional***  
    Custom parameter value of key `url` (fixed and required) that will be used in checking for finding appropriated rules when the component is fetching the rules. It is array of possible string values.
 
-   **Default values**  
-   `env-custom-param-url-values='["spin-wheel1", "spin-wheel2", "spin-wheel3"]'`
+   **Default values**: `env-custom-param-url-values='["spin-wheel1", "spin-wheel2", "spin-wheel3"]'`
 
-* `player-id` - `String`<sub>Type</sub>  - **Required**  
+* **`player-id` - `String`<sub>Type</sub>  - **Required****  
    Player id to be used on behalf of the API calls that the component will be calling.
 
-   Example usage: `<pb-spinwheel player-id="jontestuser"></pb-spinwheel>`
+   **Example usage**: `<pb-spinwheel player-id="jontestuser"></pb-spinwheel>`
 
-* `show-debug-log` - *Optional*  
+* **`show-debug-log` - *Optional***  
    Include it to set the component to show debugging log during its operation too.  
    Please **do not** include this in production.
 
-   Example usage: `<pb-spinwheel show-debug-log></pb-spinwheel>`
+   **Example usage**: `<pb-spinwheel show-debug-log></pb-spinwheel>`
 
 ## Dashboard Setup
 
