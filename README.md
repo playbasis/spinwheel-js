@@ -133,7 +133,7 @@ The available settings are as follow
    Currently it support 4 levels. If set it like `"level3": 30`, it means component will show level3 version of point reward image if such point reward is at least 30 or above. The component will make sure to show the image properly when you specified amount for all levels. Thus for `"level2": 10`, the component will show level2 version of point reward image if such point reward is at least 10 or above, but less than 30 (as it' set in case of `"level3"`).
 
    **Default values**  
-   ```html
+   ```javascript
    env-point-reward-levels='{ "level2": 10, "level3": 30, "level4": 60 }'
    ```
 
@@ -141,25 +141,25 @@ The available settings are as follow
    Target action string to be checked when component is trying to fetch appropriated rules that can be used for spinning the wheel and give back reward from Playbasis platform. If action string is not matched, then the component won't include that rule in consideration.
 
    **Default values**  
-   ```html
+   ```javascript
    env-target-action="click"
-   `
+   ```
 
 * **`env-target-tag` - `String`<sub>Type</sub>** - *Optional*  
    Target tag string to be checked when component is trying to fetch appropriated rules that can be used for spinning the wheel and give back reward from Playbasis platform. It tag string is not matched, then the component won't include that rule in consideration.
 
    **Default values**  
-   ```html
+   ```javascript
    env-target-tag="spin-wheel"
-   `
+   ```
 
 * **`env-custom-param-url-values` - `Array Literal`<sub>Type</sub>** - *Optional*  
    Custom parameter value of key `url` (fixed and required) that will be used in checking for finding appropriated rules when the component is fetching the rules. It is array of possible string values.
 
    **Default values**  
-   ```html
+   ```javascript
    env-custom-param-url-values='["spin-wheel1", "spin-wheel2", "spin-wheel3"]'
-   `
+   ```
 
 * **`player-id` - `String`<sub>Type</sub>  - Required**  
    Player id to be used on behalf of the API calls that the component will be calling.
@@ -167,7 +167,7 @@ The available settings are as follow
    **Example usage**  
    ```html
    <pb-spinwheel player-id="jontestuser"></pb-spinwheel>
-   `
+   ```
 
 * **`show-debug-log`** - *Optional*  
    Include it to set the component to show debugging log during its operation too.  
@@ -176,7 +176,7 @@ The available settings are as follow
    **Example usage**  
    ```html
    <pb-spinwheel show-debug-log></pb-spinwheel>
-   `
+   ```
 
 ## Dashboard Setup
 
