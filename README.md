@@ -58,6 +58,7 @@ For Javascript + HTML project, follows the following steps.
     >Loading...</pb-spinwheel>
 ```
 * You need to prepare `playbasis.js` first in Javascript code by adding the following code
+   > API key and API secret are our testing application on Playbasis platform. You should be creating a new application ID via [https://pbapp.net/login](https://pbapp.net/login) whenever you're ready to develop your own application.
 
 ```javascript
 	<script>
@@ -112,7 +113,60 @@ For Javascript + HTML project, follows the following steps.
 
 ## Spinwheel's Settings
 
+There are several settings that can be configured to working with spinwheel component and your setup on your own rule on Playbasis dashboard too.
 
+With bare-minimum, if you just use the following code
+
+```html
+<pb-spinwheel player-id="jontestuser">Loading...</pb-spinwheel>
+```
+
+it works too! But it will use default value of all setting that might not be the same as you set up on dashboard, then it will return error during the time you spin the wheel. Thus this section will help clarify all available settings.
+
+**Attention**: You still need to set up your dashboard to make it works, not just configure settings as seen in this section. See section *Dashboard Setup* for more information.
+
+The available settings are as follow
+
+* `env-point-reward-levels` - `Object Literal`<sub>Type</sub> - *Optional*  
+   Amount of point reward for each level that defines which point reward image the component will use when renders it. For example, if you set the rule on dashboard to have 4 different amount of point reward says 5, 10, 15, and 40. You can configure to let spinwheel component knows how it should display a proper image to match its amount for each case. Thus in result, it's better for visual.
+
+   Currently it support 4 levels. If set it like `"level3": 30`, it means component will show level3 version of point reward image if such point reward is at least 30 or above. The component will make sure to show the image properly when you specified amount for all levels. Thus for `"level2": 10`, the component will show level2 version of point reward image if such point reward is at least 10 or above, but less than 30 (as it' set in case of `"level3"`).
+
+   **Default values**  
+   `env-point-reward-levels='{ "level2": 10, "level3": 30, "level4": 60 }'`
+
+* `env-target-action` - `String`<sub>String</sub> - *Optional*  
+   Target action string to be checked when component is trying to fetch appropriated rules that can be used for spinning the wheel and give back reward from Playbasis platform. If action string is not matched, then the component won't include that rule in consideration.
+
+   **Default values**  
+   `env-target-action="click"`
+
+* `env-target-tag` - `String`<sub>Type</sub> - *Optional*  
+   Target tag string to be checked when component is trying to fetch appropriated rules that can be used for spinning the wheel and give back reward from Playbasis platform. It tag string is not matched, then the component won't include that rule in consideration.
+
+   **Default values**  
+   `env-target-tag="spin-wheel"`
+
+* `env-custom-param-url-values` - `Array Literal`<sub>Type</sub> - *Optional*  
+   Custom parameter value of key `url` (fixed and required) that will be used in checking for finding appropriated rules when the component is fetching the rules. It is array of possible string values.
+
+   **Default values**  
+   `env-custom-param-url-values='["spin-wheel1", "spin-wheel2", "spin-wheel3"]'`
+
+* `player-id` - `String`<sub>Type</sub>  - **Required**  
+   Player id to be used on behalf of the API calls that the component will be calling.
+
+   Example usage: `<pb-spinwheel player-id="jontestuser"></pb-spinwheel>`
+
+* `show-debug-log` - *Optional*  
+   Include it to set the component to show debugging log during its operation too.  
+   Please **do not** include this in production.
+
+   Example usage: `<pb-spinwheel show-debug-log></pb-spinwheel>`
+
+## Dashboard Setup
+
+To be added...
 
 # Misc
 This project is based on [https://github.com/haxpor/basepolymerit](https://github.com/haxpor/basepolymerit)
