@@ -23,6 +23,94 @@ Thus this project stays low closely to native platform as much as possible, and 
 The startup project is generated via [basepolymerit-cli](https://github.com/haxpor/basepolymerit-cli).  
 Commands to manage project and development are centralized into NPM's run scripts as follows, see [basepolymerit](https://github.com/haxpor/basepolymerit) for available commands such as `npm start`, `npm test`, `npm run server`, and couple more.
 
+## Integration
+
+We have demo of spinwheel working with pure Javascript + HTML, Angular 2, and React.  
+For detail of integration for Angular 2, and React, please see them [here](https://github.com/playbasis/spinwheel-demo).
+
+For Javascript + HTML project, follows the following steps.
+> As spinwheel component is still in private, only given permission for client can use it. Thus it's not available on public registry such as bower, or NPM just yet. But we will improve the convenience on how to deliver the package to client in near future which might incorporate managing those package by ourselves and notify client to pull in those package from us.
+
+* Create a new directory namely `playbasis` at the same level of your `index.html` file in your project.
+* Put `pb-spinwheel` files which are `pb-spinwheel-component.v.html` and `pb-spinwheel-component.v.js` into `playbasis` directory.
+* Copy `assets` directory and also put it at the same level of your `index.html` file.
+* Execute `npm install --save-dev playbasis.js` to install our [JS SDK](https://github.com/playbasis/native-sdk-js)
+* Execute `bower install --save-dev polymer` to install Polymer. This package is required to be working with spinwheel component.
+* Modify your `index.html` to have the following code inside `<head></head>` at the top of your code.
+
+```javascript
+<!-- Import playbasis.js -->
+<script src="node_modules/playbasis.js/dist/Playbasis.min.js"></script>
+<!-- Import webcomponent and our polymer component -->
+<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+<link rel="import" href="playbasis/pb-spinwheel-component.v.html">
+```
+* Add the following HTML code inside `<body></body>` to render spinwheel component (see *Spinwheel's Settings* section for its settings)
+
+```html
+<pb-spinwheel 
+      env-point-reward-levels='{ "level2": 10, "level3": 30, "level4": 60 }'
+      env-target-action="click"
+      env-target-tag="spin-wheel"
+      env-custom-param-url-values='["spin-wheel1", "spin-wheel2", "spin-wheel3"]'
+      player-id="jontestuser"
+      show-debug-log
+    >Loading...</pb-spinwheel>
+```
+* You need to prepare `playbasis.js` first in Javascript code by adding the following code
+
+```javascript
+	<script>
+	...
+
+	// 1.) Build Playbasis environment first
+  Playbasis.builder
+    .setApiKey("2043203153")
+    .setApiSecret("144da4c8df85b94dcdf1f228ced27a32")
+    .build();
+  ...
+  </script>
+```
+* Sucess and error as result from loading and spinning the wheel will be notified via event-based. You should listen to those event as follows
+
+```javascript
+	...
+  // 2.) Listen to success & error events
+  // listen to success event
+  document.addEventListener("pb-spinwheel-success-event", function(e) {
+    console.log("You got reward: ", e.detail);
+    alert("You got reward!\nSee console for detail.");
+  });
+
+  // listen to any error event
+  document.addEventListener("pb-spinwheel-error-event", function(e) {
+    console.log("Error code " + e.detail.code + " with detail: '", e.detail, "'");
+    alert("There's an error!\nSee console for detail.");
+  });
+  ...
+```
+* If you need to call member functions of spinwheel element as you already added it into DOM. You have to wait until `WebComponentsReady` is fired first, then you can further continue your usage. Use the following code
+
+```javascript
+	...
+	// 3.) Do something after 'WebComponentsReady' is fired i.e. call component's member functions (if need)
+  // when WebComponentsReady, then we can call members function of element class (if need)
+  window.addEventListener('WebComponentsReady', function(e) {
+  	console.log("WebComponents is ready");
+
+    // get html element to access its property
+    var elem = document.querySelector("pb-spinwheel");
+
+    // do something here ...
+    // such as calling its member functions
+  });
+  ...
+```
+
+## Spinwheel's Settings
+
+
+
 # Misc
 This project is based on [https://github.com/haxpor/basepolymerit](https://github.com/haxpor/basepolymerit)
 
