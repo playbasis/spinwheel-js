@@ -1,4 +1,5 @@
-# pbSpinwheel 
+# pbSpinwheel
+-- 
 
 It's based on [Polymer](https://www.polymer-project.org/1.0/).
 Separate template and logic code into 2 files (.js, and .html).
@@ -221,3 +222,6 @@ This project is licensed under copyrights. You can see the license [here](https:
 # Contact
 
 Contact [devteam@playbasis.com](mailto:devteam@playbasis.com) if you have any question, or stuck in integration to your project.
+
+--
+<p align="center" style="font-size: 12px;">© Playbasis.com.</p>
