@@ -1,108 +1,742 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1">
 
-<!-- Import playbasis.js -->
-<script src="node_modules/playbasis.js/dist/Playbasis.min.js"></script>
-<!-- Import webcomponent and our polymer component -->
-<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-<link rel="import" href="dist/pb-spinwheel-component.v.html">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>index</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb
+}
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+<style type="text/css">
+/**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: black;
+	background: none;
+	text-shadow: 0 1px white;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+@media print {
+	code[class*="language-"],
+	pre[class*="language-"] {
+		text-shadow: none;
+	}
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #f5f2f0;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: slategray;
+}
+
+.token.punctuation {
+	color: #999;
+}
+
+.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #905;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #690;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+	color: #a67f59;
+	background: hsla(0, 0%, 100%, .5);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+	color: #07a;
+}
+
+.token.function {
+	color: #DD4A68;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+	color: #e90;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+</style>
+
+
+<link rel="stylesheet" type="text/css" href="
+https://cdnjs.cloudflare.com/ajax/libs/mermaid/6.0.0/mermaid.css">
 
 <style>
-  html, body {
-    margin: 0;
-    height: 100%;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    -webkit-font-smoothing: antialiased;
-  }
-  main {
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  main > div:first-child {
-    flex: 0 1 60%;
-  }
-  main > div:nth-child(2) {
-    margin-top: 20px;
-  }
-  #banner {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    box-sizing: border-box;
-    background-color: #4CAF50;
-    color: #fff;
-    text-transform: uppercase;
-    padding: 16px 24px;
-  }
-  h2 {
-    margin: 0;
-  }
+	code {
+		white-space: normal;
+	}
+	.mermaid {
+		text-align: center;
+	}
 </style>
+
 </head>
-<body><!--  unresolved> -->
+<body>
 
-<header id="banner">
-  <h2>PbSpinwheel Demo</h2>
-</header>
+<h1 id="toc_0">pbSpinwheel</h1>
 
-<main>
-  <div>
-    <pb-spinwheel 
-      env-point-reward-levels='{ "level2": 10, "level3": 30, "level4": 60 }'
-      env-target-action="click"
-      env-target-tag="spin-wheel"
-      env-custom-param-url-values='["spin-wheel1", "spin-wheel2", "spin-wheel3"]'
-      player-id="jontestuser"
+<p>It&#39;s based on <a href="https://www.polymer-project.org/1.0/">Polymer</a>.
+Separate template and logic code into 2 files (.js, and .html).</p>
+
+<p>The project utilize toolchain as provided from <a href="https://github.com/haxpor/basepolymerit">basepolymerit</a>.</p>
+
+<h1 id="toc_1">Intention</h1>
+
+<p>The aim of this project is to use only what&#39;s needed, and stay close to native platform or say pure javascript as much as possible.<br>
+It doesn&#39;t depend on big library that would change the way (or get in the way, or require much higher knowledge) to work on with this project.</p>
+
+<p>Whenever need to integrate to any project that already depended to specific library such as React, Angular 2, etc, it can still do so with slightly less effort.</p>
+
+<h1 id="toc_2">Why Chose to Do It This Way?</h1>
+
+<p>It&#39;s bacause developing from bottom to upper is much better in sense of web development. If this component depends one big dependency, then when it needs to support other users that use different library, it will find a very hard time to do that. We might have to migrate code for multiple times, or every time a new popular library pops up.</p>
+
+<p>Thus this project stays low closely to native platform as much as possible, and depends on dependencies that are only necessary.</p>
+
+<h1 id="toc_3">How to</h1>
+
+<p>The startup project is generated via <a href="https://github.com/haxpor/basepolymerit-cli">basepolymerit-cli</a>.<br>
+Commands to manage project and development are centralized into NPM&#39;s run scripts as follows, see <a href="https://github.com/haxpor/basepolymerit">basepolymerit</a> for available commands such as <code>npm start</code>, <code>npm test</code>, <code>npm run server</code>, and couple more.</p>
+
+<h2 id="toc_4">Integration in Code</h2>
+
+<p>We have demo of spinwheel working with pure Javascript + HTML, Angular 2, and React.<br>
+For detail of integration for Angular 2, and React, please see them <a href="https://github.com/playbasis/spinwheel-demo">here</a>.</p>
+
+<p>For Javascript + HTML project, follows the following steps.</p>
+
+<blockquote>
+<p>As spinwheel component is still in private, only given permission for client can use it. Thus it&#39;s not available on public registry such as bower, or NPM just yet. But we will improve the convenience on how to deliver the package to client in near future which might incorporate managing those package by ourselves and notify client to pull in those package from us.</p>
+</blockquote>
+
+<ul>
+<li>Create a new directory namely <code>playbasis</code> at the same level of your <code>index.html</code> file in your project.</li>
+<li>Put <code>pb-spinwheel</code> files which are <code>pb-spinwheel-component.v.html</code> and <code>pb-spinwheel-component.v.js</code> into <code>playbasis</code> directory.</li>
+<li>Copy <code>assets</code> directory and also put it at the same level of your <code>index.html</code> file.</li>
+<li>Execute <code>npm install --save-dev playbasis.js</code> to install our <a href="https://github.com/playbasis/native-sdk-js">JS SDK</a></li>
+<li>Execute <code>bower install --save-dev polymer</code> to install Polymer. This package is required to be working with spinwheel component.</li>
+<li>Modify your <code>index.html</code> to have the following code inside <code>&lt;head&gt;&lt;/head&gt;</code> at the top of your code.</li>
+</ul>
+
+<div><pre><code class="language-javascript">&lt;!-- Import playbasis.js --&gt;
+&lt;script src=&quot;node_modules/playbasis.js/dist/Playbasis.min.js&quot;&gt;&lt;/script&gt;
+&lt;!-- Import webcomponent and our polymer component --&gt;
+&lt;script src=&quot;bower_components/webcomponentsjs/webcomponents-lite.min.js&quot;&gt;&lt;/script&gt;
+&lt;link rel=&quot;import&quot; href=&quot;playbasis/pb-spinwheel-component.v.html&quot;&gt;</code></pre></div>
+
+<ul>
+<li>Add the following HTML code inside <code>&lt;body&gt;&lt;/body&gt;</code> to render spinwheel component (see <em>Spinwheel&#39;s Settings</em> section for its settings)</li>
+</ul>
+
+<div><pre><code class="language-markup">&lt;pb-spinwheel 
+      env-point-reward-levels=&#39;{ &quot;level2&quot;: 10, &quot;level3&quot;: 30, &quot;level4&quot;: 60 }&#39;
+      env-target-action=&quot;click&quot;
+      env-target-tag=&quot;spin-wheel&quot;
+      env-custom-param-url-values=&#39;[&quot;spin-wheel1&quot;, &quot;spin-wheel2&quot;, &quot;spin-wheel3&quot;]&#39;
+      player-id=&quot;jontestuser&quot;
       show-debug-log
-    >Loading...</pb-spinwheel>
-  </div>
-  <div>
-    See console for detail.
-  </div>
-</main>
+    &gt;Loading...&lt;/pb-spinwheel&gt;</code></pre></div>
 
-<script>
+<ul>
+<li>You need to prepare <code>playbasis.js</code> first in Javascript code by adding the following code
+&gt; API key and API secret are our testing application on Playbasis platform. You should be creating a new application ID via <a href="https://pbapp.net/login">https://pbapp.net/login</a> whenever you&#39;re ready to develop your own application.</li>
+</ul>
 
-  // 1.) Build Playbasis environment first
+<div><pre><code class="language-javascript">    &lt;script&gt;
+    ...
+
+    // 1.) Build Playbasis environment first
   Playbasis.builder
-    .setApiKey("2043203153")
-    .setApiSecret("144da4c8df85b94dcdf1f228ced27a32")
+    .setApiKey(&quot;2043203153&quot;)
+    .setApiSecret(&quot;144da4c8df85b94dcdf1f228ced27a32&quot;)
     .build();
+  ...
+  &lt;/script&gt;</code></pre></div>
 
-  // 2.) Listen to success & error events
+<ul>
+<li>Sucess and error as result from loading and spinning the wheel will be notified via event-based. You should listen to those event as follows</li>
+</ul>
+
+<div><pre><code class="language-javascript">    ...
+  // 2.) Listen to success &amp; error events
   // listen to success event
-  document.addEventListener("pb-spinwheel-success-event", function(e) {
-    console.log("You got reward: ", e.detail);
-    alert("You got reward!\nSee console for detail.");
+  document.addEventListener(&quot;pb-spinwheel-success-event&quot;, function(e) {
+    console.log(&quot;You got reward: &quot;, e.detail);
+    alert(&quot;You got reward!\nSee console for detail.&quot;);
   });
 
   // listen to any error event
-  document.addEventListener("pb-spinwheel-error-event", function(e) {
-    console.log("Error code " + e.detail.code + " with detail: '", e.detail, "'");
-    alert("There's an error!\nSee console for detail.");
+  document.addEventListener(&quot;pb-spinwheel-error-event&quot;, function(e) {
+    console.log(&quot;Error code &quot; + e.detail.code + &quot; with detail: &#39;&quot;, e.detail, &quot;&#39;&quot;);
+    alert(&quot;There&#39;s an error!\nSee console for detail.&quot;);
   });
+  ...</code></pre></div>
 
-  // 3.) Do something after 'WebComponentsReady' is fired i.e. call component's member functions (if need)
+<ul>
+<li>If you need to call member functions of spinwheel element as you already added it into DOM. You have to wait until <code>WebComponentsReady</code> is fired first, then you can further continue your usage. Use the following code</li>
+</ul>
+
+<div><pre><code class="language-javascript">    ...
+    // 3.) Do something after &#39;WebComponentsReady&#39; is fired i.e. call component&#39;s member functions (if need)
   // when WebComponentsReady, then we can call members function of element class (if need)
-  window.addEventListener('WebComponentsReady', function(e) {
-  	console.log("WebComponents is ready");
+  window.addEventListener(&#39;WebComponentsReady&#39;, function(e) {
+    console.log(&quot;WebComponents is ready&quot;);
 
     // get html element to access its property
-    var elem = document.querySelector("pb-spinwheel");
+    var elem = document.querySelector(&quot;pb-spinwheel&quot;);
 
     // do something here ...
     // such as calling its member functions
   });
+  ...</code></pre></div>
+
+<ul>
+<li>Done.<br>
+When look at browser, you should see something like this.<br>
+<img src="sample.png" alt="sample image"></li>
+</ul>
+
+<h2 id="toc_5">Spinwheel&#39;s Settings</h2>
+
+<p>There are several settings that can be configured to working with spinwheel component and your setup on your own rule on Playbasis dashboard too.</p>
+
+<p>With bare-minimum, if you just use the following code</p>
+
+<div><pre><code class="language-markup">&lt;pb-spinwheel player-id=&quot;jontestuser&quot;&gt;Loading...&lt;/pb-spinwheel&gt;</code></pre></div>
+
+<p>it works too! But it will use default value of all setting that might not be the same as you set up on dashboard, then it will return error during the time you spin the wheel. Thus this section will help clarify all available settings.</p>
+
+<p><strong>Attention</strong>: You still need to set up your dashboard to make it works, not just configure settings as seen in this section. See section <em>Dashboard Setup</em> for more information.</p>
+
+<p>The available settings are as follow</p>
+
+<ul>
+<li><p><strong><code>env-point-reward-levels</code></strong> - <code>Object Literal</code><sub>Type</sub> - <em>Optional</em><br>
+Amount of point reward for each level that defines which point reward image the component will use when renders it. For example, if you set the rule on dashboard to have 4 different amount of point reward says 5, 10, 15, and 40. You can configure to let spinwheel component knows how it should display a proper image to match its amount for each case. Thus in result, it&#39;s better for visual.</p>
+
+<p>Currently it support 4 levels. If set it like <code>&quot;level3&quot;: 30</code>, it means component will show level3 version of point reward image if such point reward is at least 30 or above. The component will make sure to show the image properly when you specified amount for all levels. Thus for <code>&quot;level2&quot;: 10</code>, the component will show level2 version of point reward image if such point reward is at least 10 or above, but less than 30 (as it&#39; set in case of <code>&quot;level3&quot;</code>).</p>
+
+<p><strong>Default values</strong><br>
+<code>javascript
+env-point-reward-levels=&#39;{ &quot;level2&quot;: 10, &quot;level3&quot;: 30, &quot;level4&quot;: 60 }&#39;
+</code></p></li>
+<li><p><strong><code>env-target-action</code></strong> - <code>String</code><sub>String</sub> - <em>Optional</em><br>
+Target action string to be checked when component is trying to fetch appropriated rules that can be used for spinning the wheel and give back reward from Playbasis platform. If action string is not matched, then the component won&#39;t include that rule in consideration.</p>
+
+<p><strong>Default values</strong><br>
+<code>javascript
+env-target-action=&quot;click&quot;
+</code></p></li>
+<li><p><strong><code>env-target-tag</code></strong> - <code>String</code><sub>Type</sub> - <em>Optional</em><br>
+Target tag string to be checked when component is trying to fetch appropriated rules that can be used for spinning the wheel and give back reward from Playbasis platform. It tag string is not matched, then the component won&#39;t include that rule in consideration.</p>
+
+<p><strong>Default values</strong><br>
+<code>javascript
+env-target-tag=&quot;spin-wheel&quot;
+</code></p></li>
+<li><p><strong><code>env-custom-param-url-values</code></strong> - <code>Array Literal</code><sub>Type</sub> - <em>Optional</em><br>
+Custom parameter value of key <code>url</code> (fixed and required) that will be used in checking for finding appropriated rules when the component is fetching the rules. It is array of possible string values.</p>
+
+<p><strong>Default values</strong><br>
+<code>javascript
+env-custom-param-url-values=&#39;[&quot;spin-wheel1&quot;, &quot;spin-wheel2&quot;, &quot;spin-wheel3&quot;]&#39;
+</code></p></li>
+<li><p><strong><code>player-id</code></strong> - <code>String</code><sub>Type</sub>  - <strong>Required</strong><br>
+Player id to be used on behalf of the API calls that the component will be calling.</p>
+
+<p><strong>Example usage</strong><br>
+<code>html
+&lt;pb-spinwheel player-id=&quot;jontestuser&quot;&gt;&lt;/pb-spinwheel&gt;
+</code></p></li>
+<li><p><strong><code>show-debug-log</code></strong> - <em>Optional</em><br>
+Include it to set the component to show debugging log during its operation too.<br>
+Please <strong>do not</strong> include this in production.</p>
+
+<p><strong>Example usage</strong><br>
+<code>html
+&lt;pb-spinwheel show-debug-log&gt;&lt;/pb-spinwheel&gt;
+</code></p></li>
+</ul>
+
+<h2 id="toc_6">Dashboard Setup</h2>
+
+<ul>
+<li>Go to <a href="https://pbapp.net/login">https://pbapp.net/login</a> to register and create a new application. Choose a platform that matches with your intention to develop an application on.</li>
+<li>Note your <code>Api Key</code> and <code>Api Secret</code>.</li>
+<li>Click on <code>Engine</code> on the left panel, then click on <code>New Rule</code> to create a new rule.</li>
+<li>Enter <code>TITLE</code>, <code>DESCRIPTION</code>, and set <code>TAGS</code> as appropriated. <sub>Note your <code>TAGS</code> value, we will be using this in code.</sub></li>
+<li>Click on <code>Add Action</code> and choose an action you intended to use it. <sub>Note this value.</sub></li>
+<li>Click on <code>Add: condition &amp; reward</code> -&gt; <code>Condition</code> -&gt; <code>customParameter</code>.</li>
+<li>Enter <code>NAME</code> as <code>url</code> with <code>OPERATION</code> to be <code>=</code>, then enter <code>EXPECTED VALUE</code> as you desire. <sub>Note your <code>EXPECTED VALUE</code>, we will be using it in code.</sub></li>
+<li>Click on <code>Add: condition &amp; reward</code> -&gt; <code>Reward Group</code> -&gt; <code>random</code> to create a randomized reward group in which this type of reward is suitable for using with spin wheel.</li>
+<li>Click on <code>+ Add Reward</code> and add as many reward as you like. Reward type can be normal point-based like <code>exp</code>, <code>point</code>, <code>token</code> or even <code>goods</code>.</li>
+<li>For each added reward, you can set its <code>QUANTITY</code> which is amount to give to user, and its <code>WEIGHT</code> which determines the chance of such reward to be given.</li>
+<li>Click <code>Save</code> button.</li>
+<li>We&#39;re done with our first rule.<br>
+You can repeat the above steps as many rule as much as you like. Each rule to be used in spinwheel component needs to have <strong>unique</strong> value for <code>url</code> as you set it in condition. During the run time, spinwheel component will dynamically fetch all those rules starting the filtering process from
+
+<ul>
+<li>tag</li>
+<li>action</li>
+<li>condition as seen in <code>url</code> and its value
+This means you can have multiple of rules that are suitable to be used with spinwheel component.<br>
+See more information of rules which are eligible to be considered in use for spinwheel component at section <em>Rule Eligibility</em>.</li>
+</ul></li>
+<li>All your <em>noted values</em> as seen above, you will use them to configure spinwheel component in code.</li>
+</ul>
+
+<h1 id="toc_7">Rule Eligibility</h1>
+
+<p>To consider a rule to be eligile or not for using in spinwheel component. It needs to have following information set on dashboard.</p>
+
+<ul>
+<li>Tags<br>
+Rules with the same tags will be grouped together in consideration further.</li>
+<li>Action
+Rules with the same action string will be grouped together in consideration futher.</li>
+<li><code>url</code> value<br>
+A custom parameter value of <code>url</code> that must be unique for each rule as set on dashboard. You specify subset of all of these values to include them in consideration by the component.</li>
+</ul>
+
+<h1 id="toc_8">Misc</h1>
+
+<p>This project is based on <a href="https://github.com/haxpor/basepolymerit">https://github.com/haxpor/basepolymerit</a></p>
+
+<h1 id="toc_9">License</h1>
+
+<p>This project is licensed under copyrights. You can see the license <a href="https://github.com/playbasis/spinwheel-js/blob/master/README.md">here</a>.</p>
+
+<h1 id="toc_10">Contact</h1>
+
+<p>Contact <a href="mailto:devteam@playbasis.com">devteam@playbasis.com</a> if you have any question, or stuck in integration to your project.</p>
+
+
+
+<script type="text/javascript">
+var _self="undefined"!=typeof window?window:"undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?self:{},Prism=function(){var e=/\blang(?:uage)?-(\w+)\b/i,t=0,n=_self.Prism={util:{encode:function(e){return e instanceof a?new a(e.type,n.util.encode(e.content),e.alias):"Array"===n.util.type(e)?e.map(n.util.encode):e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\u00a0/g," ")},type:function(e){return Object.prototype.toString.call(e).match(/\[object (\w+)\]/)[1]},objId:function(e){return e.__id||Object.defineProperty(e,"__id",{value:++t}),e.__id},clone:function(e){var t=n.util.type(e);switch(t){case"Object":var a={};for(var r in e)e.hasOwnProperty(r)&&(a[r]=n.util.clone(e[r]));return a;case"Array":return e.map&&e.map(function(e){return n.util.clone(e)})}return e}},languages:{extend:function(e,t){var a=n.util.clone(n.languages[e]);for(var r in t)a[r]=t[r];return a},insertBefore:function(e,t,a,r){r=r||n.languages;var l=r[e];if(2==arguments.length){a=arguments[1];for(var i in a)a.hasOwnProperty(i)&&(l[i]=a[i]);return l}var o={};for(var s in l)if(l.hasOwnProperty(s)){if(s==t)for(var i in a)a.hasOwnProperty(i)&&(o[i]=a[i]);o[s]=l[s]}return n.languages.DFS(n.languages,function(t,n){n===r[e]&&t!=e&&(this[t]=o)}),r[e]=o},DFS:function(e,t,a,r){r=r||{};for(var l in e)e.hasOwnProperty(l)&&(t.call(e,l,e[l],a||l),"Object"!==n.util.type(e[l])||r[n.util.objId(e[l])]?"Array"!==n.util.type(e[l])||r[n.util.objId(e[l])]||(r[n.util.objId(e[l])]=!0,n.languages.DFS(e[l],t,l,r)):(r[n.util.objId(e[l])]=!0,n.languages.DFS(e[l],t,null,r)))}},plugins:{},highlightAll:function(e,t){var a={callback:t,selector:'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'};n.hooks.run("before-highlightall",a);for(var r,l=a.elements||document.querySelectorAll(a.selector),i=0;r=l[i++];)n.highlightElement(r,e===!0,a.callback)},highlightElement:function(t,a,r){for(var l,i,o=t;o&&!e.test(o.className);)o=o.parentNode;o&&(l=(o.className.match(e)||[,""])[1],i=n.languages[l]),t.className=t.className.replace(e,"").replace(/\s+/g," ")+" language-"+l,o=t.parentNode,/pre/i.test(o.nodeName)&&(o.className=o.className.replace(e,"").replace(/\s+/g," ")+" language-"+l);var s=t.textContent,u={element:t,language:l,grammar:i,code:s};if(!s||!i)return n.hooks.run("complete",u),void 0;if(n.hooks.run("before-highlight",u),a&&_self.Worker){var c=new Worker(n.filename);c.onmessage=function(e){u.highlightedCode=e.data,n.hooks.run("before-insert",u),u.element.innerHTML=u.highlightedCode,r&&r.call(u.element),n.hooks.run("after-highlight",u),n.hooks.run("complete",u)},c.postMessage(JSON.stringify({language:u.language,code:u.code,immediateClose:!0}))}else u.highlightedCode=n.highlight(u.code,u.grammar,u.language),n.hooks.run("before-insert",u),u.element.innerHTML=u.highlightedCode,r&&r.call(t),n.hooks.run("after-highlight",u),n.hooks.run("complete",u)},highlight:function(e,t,r){var l=n.tokenize(e,t);return a.stringify(n.util.encode(l),r)},tokenize:function(e,t){var a=n.Token,r=[e],l=t.rest;if(l){for(var i in l)t[i]=l[i];delete t.rest}e:for(var i in t)if(t.hasOwnProperty(i)&&t[i]){var o=t[i];o="Array"===n.util.type(o)?o:[o];for(var s=0;s<o.length;++s){var u=o[s],c=u.inside,g=!!u.lookbehind,h=!!u.greedy,f=0,d=u.alias;u=u.pattern||u;for(var p=0;p<r.length;p++){var m=r[p];if(r.length>e.length)break e;if(!(m instanceof a)){u.lastIndex=0;var y=u.exec(m),v=1;if(!y&&h&&p!=r.length-1){var b=r[p+1].matchedStr||r[p+1],k=m+b;if(p<r.length-2&&(k+=r[p+2].matchedStr||r[p+2]),u.lastIndex=0,y=u.exec(k),!y)continue;var w=y.index+(g?y[1].length:0);if(w>=m.length)continue;var _=y.index+y[0].length,P=m.length+b.length;if(v=3,P>=_){if(r[p+1].greedy)continue;v=2,k=k.slice(0,P)}m=k}if(y){g&&(f=y[1].length);var w=y.index+f,y=y[0].slice(f),_=w+y.length,S=m.slice(0,w),O=m.slice(_),j=[p,v];S&&j.push(S);var A=new a(i,c?n.tokenize(y,c):y,d,y,h);j.push(A),O&&j.push(O),Array.prototype.splice.apply(r,j)}}}}}return r},hooks:{all:{},add:function(e,t){var a=n.hooks.all;a[e]=a[e]||[],a[e].push(t)},run:function(e,t){var a=n.hooks.all[e];if(a&&a.length)for(var r,l=0;r=a[l++];)r(t)}}},a=n.Token=function(e,t,n,a,r){this.type=e,this.content=t,this.alias=n,this.matchedStr=a||null,this.greedy=!!r};if(a.stringify=function(e,t,r){if("string"==typeof e)return e;if("Array"===n.util.type(e))return e.map(function(n){return a.stringify(n,t,e)}).join("");var l={type:e.type,content:a.stringify(e.content,t,r),tag:"span",classes:["token",e.type],attributes:{},language:t,parent:r};if("comment"==l.type&&(l.attributes.spellcheck="true"),e.alias){var i="Array"===n.util.type(e.alias)?e.alias:[e.alias];Array.prototype.push.apply(l.classes,i)}n.hooks.run("wrap",l);var o="";for(var s in l.attributes)o+=(o?" ":"")+s+'="'+(l.attributes[s]||"")+'"';return"<"+l.tag+' class="'+l.classes.join(" ")+'" '+o+">"+l.content+"</"+l.tag+">"},!_self.document)return _self.addEventListener?(_self.addEventListener("message",function(e){var t=JSON.parse(e.data),a=t.language,r=t.code,l=t.immediateClose;_self.postMessage(n.highlight(r,n.languages[a],a)),l&&_self.close()},!1),_self.Prism):_self.Prism;var r=document.currentScript||[].slice.call(document.getElementsByTagName("script")).pop();return r&&(n.filename=r.src,document.addEventListener&&!r.hasAttribute("data-manual")&&document.addEventListener("DOMContentLoaded",n.highlightAll)),_self.Prism}();"undefined"!=typeof module&&module.exports&&(module.exports=Prism),"undefined"!=typeof global&&(global.Prism=Prism);
 </script>
+
+<script type="text/javascript">
+Prism.languages.markup={comment:/<!--[\w\W]*?-->/,prolog:/<\?[\w\W]+?\?>/,doctype:/<!DOCTYPE[\w\W]+?>/,cdata:/<!\[CDATA\[[\w\W]*?]]>/i,tag:{pattern:/<\/?(?!\d)[^\s>\/=.$<]+(?:\s+[^\s>\/=]+(?:=(?:("|')(?:\\\1|\\?(?!\1)[\w\W])*\1|[^\s'">=]+))?)*\s*\/?>/i,inside:{tag:{pattern:/^<\/?[^\s>\/]+/i,inside:{punctuation:/^<\/?/,namespace:/^[^\s>\/:]+:/}},"attr-value":{pattern:/=(?:('|")[\w\W]*?(\1)|[^\s>]+)/i,inside:{punctuation:/[=>"']/}},punctuation:/\/?>/,"attr-name":{pattern:/[^\s>\/]+/,inside:{namespace:/^[^\s>\/:]+:/}}}},entity:/&#?[\da-z]{1,8};/i},Prism.hooks.add("wrap",function(a){"entity"===a.type&&(a.attributes.title=a.content.replace(/&amp;/,"&"))}),Prism.languages.xml=Prism.languages.markup,Prism.languages.html=Prism.languages.markup,Prism.languages.mathml=Prism.languages.markup,Prism.languages.svg=Prism.languages.markup;
+</script>
+
+<script type="text/javascript">
+Prism.languages.clike={comment:[{pattern:/(^|[^\\])\/\*[\w\W]*?\*\//,lookbehind:!0},{pattern:/(^|[^\\:])\/\/.*/,lookbehind:!0}],string:{pattern:/(["'])(\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,greedy:!0},"class-name":{pattern:/((?:\b(?:class|interface|extends|implements|trait|instanceof|new)\s+)|(?:catch\s+\())[a-z0-9_\.\\]+/i,lookbehind:!0,inside:{punctuation:/(\.|\\)/}},keyword:/\b(if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\b/,"boolean":/\b(true|false)\b/,"function":/[a-z0-9_]+(?=\()/i,number:/\b-?(?:0x[\da-f]+|\d*\.?\d+(?:e[+-]?\d+)?)\b/i,operator:/--?|\+\+?|!=?=?|<=?|>=?|==?=?|&&?|\|\|?|\?|\*|\/|~|\^|%/,punctuation:/[{}[\];(),.:]/};
+</script>
+
+<script type="text/javascript">
+Prism.languages.javascript=Prism.languages.extend("clike",{keyword:/\b(as|async|await|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|set|static|super|switch|this|throw|try|typeof|var|void|while|with|yield)\b/,number:/\b-?(0x[\dA-Fa-f]+|0b[01]+|0o[0-7]+|\d*\.?\d+([Ee][+-]?\d+)?|NaN|Infinity)\b/,"function":/[_$a-zA-Z\xA0-\uFFFF][_$a-zA-Z0-9\xA0-\uFFFF]*(?=\()/i}),Prism.languages.insertBefore("javascript","keyword",{regex:{pattern:/(^|[^\/])\/(?!\/)(\[.+?]|\\.|[^\/\\\r\n])+\/[gimyu]{0,5}(?=\s*($|[\r\n,.;})]))/,lookbehind:!0,greedy:!0}}),Prism.languages.insertBefore("javascript","class-name",{"template-string":{pattern:/`(?:\\\\|\\?[^\\])*?`/,greedy:!0,inside:{interpolation:{pattern:/\$\{[^}]+\}/,inside:{"interpolation-punctuation":{pattern:/^\$\{|\}$/,alias:"punctuation"},rest:Prism.languages.javascript}},string:/[\s\S]+/}}}),Prism.languages.markup&&Prism.languages.insertBefore("markup","tag",{script:{pattern:/(<script[\w\W]*?>)[\w\W]*?(?=<\/script>)/i,lookbehind:!0,inside:Prism.languages.javascript,alias:"language-javascript"}}),Prism.languages.js=Prism.languages.javascript;
+</script>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/6.0.0/mermaid.min.js"></script>
+<script type="text/javascript">mermaid.initialize({startOnLoad:true});</script>
 </body>
+
 </html>
