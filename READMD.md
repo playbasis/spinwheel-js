@@ -110,7 +110,7 @@ For Javascript + HTML project, follows the following steps.
 ```
 * Done.  
    When look at browser, you should see something like this.  
-   ![sample image](sample.png)
+   ![sample image](assets/sample.png)
 
 ## Spinwheel's Settings
 
