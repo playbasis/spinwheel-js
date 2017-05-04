@@ -5,6 +5,9 @@ Separate template and logic code into 2 files (.js, and .html).
 
 The project utilize toolchain as provided from [basepolymerit](https://github.com/haxpor/basepolymerit).
 
+<details>
+  <summary>Intention and Reason to Create Library This Way</summary>
+  
 # Intention
 
 The aim of this project is to use only what's needed, and stay close to native platform or say pure javascript as much as possible.  
@@ -17,11 +20,22 @@ Whenever need to integrate to any project that already depended to specific libr
 It's bacause developing from bottom to upper is much better in sense of web development. If this component depends one big dependency, then when it needs to support other users that use different library, it will find a very hard time to do that. We might have to migrate code for multiple times, or every time a new popular library pops up.
 
 Thus this project stays low closely to native platform as much as possible, and depends on dependencies that are only necessary.
+</details>
 
 # How to
 
 The startup project is generated via [basepolymerit-cli](https://github.com/haxpor/basepolymerit-cli).  
 Commands to manage project and development are centralized into NPM's run scripts as follows, see [basepolymerit](https://github.com/haxpor/basepolymerit) for available commands such as `npm start`, `npm test`, `npm run server`, and couple more.
+
+## Test Demo
+
+Follows the following steps to quickly run the test project and see what it looks like
+
+* Go to project directory
+* Execute `npm install`
+* Execute `bower install`
+* Execute `npm run build` to build things up and be used by demo project
+* Open `index.html` on your local HTTP server.
 
 ## Integration in Code
 
@@ -167,6 +181,14 @@ The available settings are as follow
    **Example usage**  
    ```html
    <pb-spinwheel player-id="jontestuser"></pb-spinwheel>
+   ```
+
+* **`total-spin-chance`** - `Number`<sub>Type</sub>  - *Optional*  
+   Total chance for users to be able to spin the wheel.
+
+   **Default values**  
+   ```javascript
+   total-spin-chance="1"
    ```
 
 * **`show-debug-log`** - *Optional*  
