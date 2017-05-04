@@ -63,8 +63,10 @@
       env-target-tag="spin-wheel"
       env-custom-param-url-values='["spin-wheel1", "spin-wheel2", "spin-wheel3"]'
       player-id="jontestuser"
+      total-spin-chance="5"
       show-debug-log
     >Loading...</pb-spinwheel>
+    <p>Chance left to spin: <span id="chance-left" style="font-weight: 400;"></span></p>
   </div>
   <div>
     See console for detail.
@@ -77,12 +79,19 @@
   Playbasis.builder
     .setApiKey("2580571087")
     .setApiSecret("5036b5527c65ebda325db56f107f8707")
+    .setBaseUrl("http://digi-api.pbapp.net")
     .build();
 
   // 2.) Listen to success & error events
   // listen to success event
   document.addEventListener("pb-spinwheel-success-event", function(e) {
     console.log("You got reward: ", e.detail);
+
+    // get pb-spinwheel
+    var pbSpinwheel = document.querySelector("pb-spinwheel");
+    // update total chance as shown on the page
+    document.getElementById("chance-left").innerHTML = pbSpinwheel.spinChanceLeft;
+
     alert("You got reward!\nSee console for detail.");
   });
 
@@ -98,7 +107,10 @@
   	console.log("WebComponents is ready");
 
     // get html element to access its property
-    var elem = document.querySelector("pb-spinwheel");
+    var pbSpinwheel = document.querySelector("pb-spinwheel");
+
+    // update total chance as shown on the page
+    document.getElementById("chance-left").innerHTML = pbSpinwheel.spinChanceLeft;
 
     // do something here ...
     // such as calling its member functions

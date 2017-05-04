@@ -80,7 +80,15 @@ class PbSpinwheel {
         },
         envCustomParamUrlValues: {
           type: Array,
-          value: function() { return ["spin-wheel1", "spin-wheel2", "spin-wheel3"] }
+          value: function() { return ["spin-wheel1", "spin-wheel2", "spin-wheel3"]; }
+        },
+        totalSpinChance: {
+          type: Number,
+          value: function() { return 1; }
+        },
+        spinChanceLeft: {
+          type: Number,
+          value: function() { return 1; } // this one should be READONLY, I know it's ugly, but we will fix it later
         }
     };
 
@@ -88,6 +96,7 @@ class PbSpinwheel {
 
       // get child element id
       this._innerWheelHtmlElement = document.getElementById("inner-wheel");
+      this.spinChanceLeft = this.totalSpinChance;
 
       if (Playbasis.env.global.apiKey != null &&
           Playbasis.env.global.apiSecret != null) {
@@ -97,8 +106,12 @@ class PbSpinwheel {
       else {
         let e = new Error("Playbasis environment is not built yet");
         e.code = this.kErrorCode.PLAYBASIS_NOT_BUILD;
+        this._internalErrorCallback(e);
         this.fireErrorEvent(e);
       }
+
+      // add listener to its css transition event
+      this.addEventListenerOfTransitionEndToInnerWheelElement();
     }
 
     // hide private member variables inside here
@@ -117,6 +130,7 @@ class PbSpinwheel {
 
       this._kParamName = "url";
       this._innerWheelHtmlElement;
+      this._spinChanceSuccessCount = 0; // keep track of chance left to spin (only success is counted)
     }
   }
 
@@ -232,6 +246,7 @@ class PbSpinwheel {
           this.spinWheel(this.getRotationAngleForTargetSectionIndex(this._targetSectionIndex));
         }, (e) => {
           this.dlog(e);
+          this._internalErrorCallback(e);
           this.fireErrorEvent(e);
         });
 
@@ -241,6 +256,8 @@ class PbSpinwheel {
       document.getElementById("pb-spinwheel-button").disabled = true;
     }
   }
+
+
 
   /**
    * Get rotation angle within a target section index
@@ -286,7 +303,7 @@ class PbSpinwheel {
       this.dlog("minAngle: " + minAngle + ", maxAngle: " + maxAngle);
     }
 
-    // return the calcuated angle within the acceptable range
+    // return the calculated angle within the acceptable range
     var retAngle = Math.floor(Math.random() * (maxAngle-minAngle)) + minAngle;
     this.dlog("spin to angle: " + retAngle);
     return retAngle;
@@ -728,6 +745,8 @@ class PbSpinwheel {
         // send back though callback
         selfObj.dlog("getRewardItem: ", selfObj._gotRewardItem);
 
+        // call internal success callback
+        selfObj._internalSuccessCallback(selfObj._gotRewardItem);
         // send final result back to user
         selfObj.fireSuccessEvent(selfObj._gotRewardItem);
       });
@@ -742,12 +761,40 @@ class PbSpinwheel {
     this.dlog("spinning wheel");
 
     // generate random number between 1 - 360, then add to the new degree.
-    var newDegree = this._degree;
+    var newDegree = this._degree * (this._spinChanceSuccessCount + 1);
     var totalDegree = newDegree + targetDegree;
 
-    // add listener to its css transition event
-    this.addEventListenerOfTransitionEndToInnerWheelElement();
     this._innerWheelHtmlElement.style.transform = "rotate(" + totalDegree + 'deg)';
+  }
+
+  _internalSuccessCallback(rewardItem) {
+    this.dlog("internal success callback is called with reward item: ", rewardItem);
+
+    this._spinChanceSuccessCount++;
+    this.spinChanceLeft = this.totalSpinChance - this._spinChanceSuccessCount;
+    this.dlog("chance success count is " + this._spinChanceSuccessCount + " from " + this.totalSpinChance);
+
+    // re-enable button again if user didn't use up all chances
+    if (this._spinChanceSuccessCount < this.totalSpinChance) {
+      this.dlog("re-enable spin button again");
+      this.enableSpinButton();
+    }
+  }
+
+  _internalErrorCallback(e) {
+    this.dlog("internal error callback is called with error: ", e);
+
+    this.dlog("re-enable spin button again");
+    this.enableSpinButton();
+  }
+
+  /**
+   * Programmatically enable spin button.
+   * It will allow user to touch on it to spin the wheel.
+   */
+  enableSpinButton() {
+    this._spinButtonDisabled = false;
+      document.getElementById("pb-spinwheel-button").disabled = false;
   }
 }
 
