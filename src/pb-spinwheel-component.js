@@ -362,6 +362,7 @@ class PbSpinwheel {
     var type = -1;
     var rewardType = this._gotRewardItem.reward_type;
     var rewardValToCheckAgainst;
+    var isGoodsGroup = false;
 
     this.dlog("mark");
     this.dlog(this._gotRewardItem);
@@ -376,7 +377,17 @@ class PbSpinwheel {
     }
     else if (rewardType == "goods") {
       type = 2;
-      rewardValToCheckAgainst = this._gotRewardItem.reward_data.goods_id;
+
+      // check if it's goods group or not as its id will be different
+      if (this._gotRewardItem.reward_data.group != null) {
+        rewardValToCheckAgainst = this._gotRewardItem.reward_data.group;
+        isGoodsGroup = true;
+      }
+      // direct reward item
+      else {
+        rewardValToCheckAgainst = this._gotRewardItem.reward_data.goods_id;
+        isGoodsGroup = false;
+      }
 
       this.dlog("mark: goods type -> goods_id: " + rewardValToCheckAgainst);
     }
@@ -401,7 +412,6 @@ class PbSpinwheel {
     // checking against either value for point-based, or goods_id for goods
     for (var i=0; i<this._rewards.length; i++) {
       var reward = this._rewards[i];
-      
       if (type == 1 && reward.reward_name == "point") {
         if (reward.quantity == rewardValToCheckAgainst) {
           this._targetSectionIndex = i;
@@ -411,7 +421,18 @@ class PbSpinwheel {
         }
       }
       else if (type == 2 && reward.reward_name == "goods") {
-        if (reward.data.goods_id == rewardValToCheckAgainst) {
+
+        // handling for either it's goods group, or direct goods
+        // get base value to check against
+        var baseCheckGoodsValue;
+        if (isGoodsGroup) {
+          baseCheckGoodsValue = reward.data.group;
+        }
+        else {
+          baseCheckGoodsValue = reward.data.goods_id;
+        }
+
+        if (baseCheckGoodsValue == rewardValToCheckAgainst) {
           this._targetSectionIndex = i;
 
           this.dlog("found target section index at: " + this._targetSectionIndex);
@@ -572,6 +593,7 @@ class PbSpinwheel {
 
       // find rewards group
       if (jigsaw.category == "GROUP") {
+
         // save all rewards
         this._rewards = jigsaw.config.group_container;
 
