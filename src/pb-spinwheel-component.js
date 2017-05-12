@@ -25,6 +25,8 @@ class PbSpinwheel {
               PLAYBASIS_NOT_BUILD: 1,       // playbasis environment was not built yet
               NO_APPLICABLE_RULE: 2,        // no applicable rule can be found to use with spin wheel
               PLAYER_ID_NOT_SET: 3,         // player id is not set prior to attaching component HTML element in the DOM
+              NO_REWARD_RESULT: 4,          // there was no reward returned
+              EMPTY_REWARD_EVENT_RESULT: 5, // events result from reward is empty
             }
           }
         },
@@ -235,6 +237,26 @@ class PbSpinwheel {
 
       this.executeEngineRuleToGetRewardId()
         .then((result) => {
+
+          // check if we got reward back
+          if (result == null) {
+            let e = new Error("Result is null");
+            e.code = this.kErrorCode.NO_REWARD_RESULT;
+            
+            this._internalErrorCallback(e);
+            this.fireErrorEvent(e);
+            return; // not to anymore proceed
+          }
+          // check if there's at least 1 reward event so we can mark
+          if (result.response.events.length == 0) {
+            let e = new Error("Result rewards object has empty reward");
+            e.code = this.kErrorCode.EMPTY_REWARD_EVENT_RESULT;
+            
+            this._internalErrorCallback(e);
+            this.fireErrorEvent(e);
+            return; // not to anymore proceed
+          }
+
           // save got-reward
           // support only 1 reward from reward group set in dashboard
           this._gotRewardItem = result.response.events[0];
