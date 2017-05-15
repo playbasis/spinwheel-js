@@ -44,6 +44,20 @@ class PbSpinwheel {
           readOnly: true,
           value: function() { return "pb-spinwheel-error-event"; }
         },
+        // aimed to be constant variable for ready event name
+        // user adds event listener to this name to listen to it
+        kReadyEvent: {
+          type: String,
+          readOnly: true,
+          value: function() { return "pb-spinwheel-ready-event"; }
+        },
+        // aimed to be constant variable for when reward result is fetched
+        // user adds event listener to this name to listen to it
+        kResultRewardEvent: {
+          type: String,
+          readOnly: true,
+          value: function() { return "pb-spinwheel-result-reward-event"; }
+        },
         // dynamically set internally when it's firstly loaded successfully
         isLoaded: {
           type: Boolean,
@@ -170,6 +184,18 @@ class PbSpinwheel {
   }
 
   /**
+   * Fire custom event with attached data object.
+   * @param {String} eventName Global event name to fire event
+   * @param  {Object} dataObj Data object
+   */
+  fireCustomEvent(eventName, dataObj) {
+    this.dlog("firing custom event: " + eventName, dataObj);
+
+    var event = new CustomEvent(eventName, { "detail": dataObj });
+    document.dispatchEvent(event);
+  }
+
+  /**
    * Begin loading rules for spinwheel
    */
   loadSpinWheelRules() {
@@ -218,6 +244,9 @@ class PbSpinwheel {
           // this will mark that spin wheel is successfully loaded and will render
           // each sections on the wheel necessarily
           selfObj.isLoaded = true;
+
+          // fire ready event with all possible rewards information
+          selfObj.fireCustomEvent(this.kReadyEvent, selfObj._rewards);
         }
       }, (e) => {
         selfObj.dlog("error fetching all rules. " + e.code + ", " + e.message);
@@ -503,6 +532,9 @@ class PbSpinwheel {
     }
     else {
       this.dlog(this._targetSectionIndex);
+
+      // fire result reward event
+      this.fireCustomEvent(this.kResultRewardEvent, this._rewards[this._targetSectionIndex]);
     }
   }
 
