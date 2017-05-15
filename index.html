@@ -81,7 +81,7 @@
     .setApiSecret("144da4c8df85b94dcdf1f228ced27a32")
     .build();
 
-  // 2.) Listen to success & error events
+  // 2.) Listen to available events
   // listen to success event
   document.addEventListener("pb-spinwheel-success-event", function(e) {
     console.log("You got reward: ", e.detail);
@@ -98,6 +98,16 @@
   document.addEventListener("pb-spinwheel-error-event", function(e) {
     console.log("Error code " + e.detail.code + " with detail: '", e.detail, "'");
     alert("There's an error!\nSee console for detail.");
+  });
+
+  // listen to ready event
+  document.addEventListener("pb-spinwheel-ready-event", function(e) {
+    console.log("All reward data is fetched: ", e.detail);
+  });
+
+  // listen to result reward event
+  document.addEventListener("pb-spinwheel-result-reward-event", function(e) {
+    console.log("Result reward for user is: ", e.detail);
   });
 
   // 3.) Do something after 'WebComponentsReady' is fired i.e. call component's member functions (if need)

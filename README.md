@@ -104,6 +104,26 @@ For Javascript + HTML project, follows the following steps.
   });
   ...
 ```
+* More events you can listen to which you can begin your custom function at the same time spinwheel reached certain point of operation
+
+  * `pb-spinwheel-ready-event` - when spinwheel successfully loaded all reward data and its spin button becomes ready to click (not disabled anymore). It will be fired only once. Possible reward array will be returned as `e.detail`.
+
+    ```javascript
+    // listen to ready event
+    document.addEventListener("pb-spinwheel-ready-event", function(e) {
+      console.log("All reward data is fetched: ", e.detail);
+    });
+    ```
+
+  * `pb-spinwheel-result-reward-event` - when spinwheel executed engine rule behind the scene and got result reward before it begins spinning the wheel. Thus you have time to do something in parallel of spinning.
+
+    ```javascript
+    // listen to result reward event
+    document.addEventListener("pb-spinwheel-result-reward-event", function(e) {
+      console.log("Result reward for user is: ", e.detail);
+    });
+    ```
+    
 * If you need to call member functions of spinwheel element as you already added it into DOM. You have to wait until `WebComponentsReady` is fired first, then you can further continue your usage. Use the following code
 
 ```javascript
